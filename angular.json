@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "taskboard"
+  "defaultProject": "taskboard",
+  "cli": {
+    "analytics": "cc7bdf8d-80ff-4e26-9900-07a61ce86dc6"
+  }
 }

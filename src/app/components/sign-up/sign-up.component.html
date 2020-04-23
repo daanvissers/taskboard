@@ -1,0 +1,36 @@
+<h2>Sign Up</h2>
+
+<mat-grid-list cols="1" rowHeight="1em">
+</mat-grid-list>
+
+<mat-grid-list cols="1" rowHeight="4em">
+  <mat-grid-tile>
+    <mat-form-field class="full-width">
+      <mat-label>E-mail Address</mat-label>
+      <input matInput [(ngModel)]="email">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [(ngModel)]="password">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field class="full-width">
+      <mat-label>Repeat Password</mat-label>
+      <input type="password" matInput [(ngModel)]="repeat">
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="2" rowHeight="4em">
+  <mat-grid-tile>
+    <button mat-stroked-button mat-dialog-close color="primary">Close</button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <button mat-flat-button color="primary" (click)="signUp(email, name, password, repeat)">Sign up</button>
+  </mat-grid-tile>
+</mat-grid-list>
