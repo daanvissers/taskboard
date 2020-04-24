@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {SignUpComponent} from '../sign-up/sign-up.component';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,15 +15,16 @@ export class SignInComponent implements OnInit {
   dialogRef: MatDialogRef<any>;
 
   constructor(dialogRef: MatDialogRef<SignInComponent>,
-              public dialog: MatDialog) {
+              public dialog: MatDialog, public authService: AuthenticationService) {
     this.dialogRef = dialogRef;
   }
 
   ngOnInit(): void {
   }
 
-  login(email, password) {
-    // Continue to login procedure...
+  signIn(email, password) {
+    this.authService.signIn(email, password);
+    this.dialog.closeAll();
   }
 
   openSignUpDialog() {

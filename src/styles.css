@@ -5,3 +5,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-width {
   width: 100%;
 }
+
+.position-fixed{
+  position: fixed;
+}
+
+.z-index-999 {
+  z-index: 999;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

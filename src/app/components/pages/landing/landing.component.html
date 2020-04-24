@@ -1,0 +1,6 @@
+<div class="container">
+  <mat-card class="mat-elevation-z3">
+    Welcome to Taskboard<span *ngIf="authService.isLoggedIn">, {{ authService.userData.email }}</span>!
+    <div style="height: 70vh;"></div>
+  </mat-card>
+</div>

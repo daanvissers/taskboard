@@ -14,13 +14,18 @@ import { MaterialModule } from './modules/material/material.module';
 import { FormsModule } from '@angular/forms';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { AuthenticationService } from './services/authentication.service';
+import { ProjectsComponent } from './components/pages/projects/projects.component';
+import { LandingComponent } from './components/pages/landing/landing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    ProjectsComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     AngularFirestoreModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -8,16 +10,19 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SignUpComponent implements OnInit {
 
   @Input() email: string;
-  @Input() name: string;
   @Input() password: string;
   @Input() repeat: string;
 
-  constructor() { }
+  constructor(public authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  signUp(email: string, name: string, password: string, repeat: string) {
-    // Actual sign up process here...
+  signUp(email: string, password: string, repeat: string) {
+    if (password !== repeat) {
+      alert('Passwords invalid: Please make sure the passwords match!');
+    } else {
+      this.authService.signUp(email, password);
+    }
   }
 }
