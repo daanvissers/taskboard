@@ -1,5 +1,11 @@
 <mat-toolbar color="primary" class="position-fixed z-index-999 mat-elevation-z8">
-  <span class="cursor-pointer" (click)="navigateHome()">Taskboard</span>
+
+  <!-- Hamburger Icon -->
+  <button mat-icon-button>
+    <mat-icon (click)="toggleNav()">menu</mat-icon>
+  </button>
+
+  <span class="cursor-pointer margin-left" (click)="navigateHome()">Taskboard</span>
 
   <!-- This fills the remaining space of the current row -->
   <span class="fill-space"></span>
@@ -8,3 +14,23 @@
 
   <button *ngIf="authService.isLoggedIn" mat-flat-button color="primary" (click)="signOut()">Sign Out</button>
 </mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" class="sidenav">
+    <mat-list class="margin-top">
+      <a mat-list-item [routerLink]="'projects'" (click)="closeNav()"> Projects </a>
+      <!-- <mat-list-item> Pepper </mat-list-item> -->
+      <!-- <mat-list-item> Salt </mat-list-item> -->
+      <!-- <mat-list-item> Paprika </mat-list-item> -->
+    </mat-list>
+  </mat-sidenav>
+
+  <!-- Page contents -->
+  <mat-sidenav-content style="height: 100vh;">
+
+    <mat-grid-list cols="1" rowHeight="8em"></mat-grid-list>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
