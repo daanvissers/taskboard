@@ -17,6 +17,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AuthenticationService } from './services/authentication.service';
 import { ProjectsComponent } from './components/pages/projects/projects.component';
 import { LandingComponent } from './components/pages/landing/landing.component';
+import { CreateProjectComponent } from './components/pages/projects/create-project/create-project.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LandingComponent } from './components/pages/landing/landing.component';
     SignInComponent,
     SignUpComponent,
     ProjectsComponent,
-    LandingComponent
+    LandingComponent,
+    CreateProjectComponent,
   ],
   imports: [
     BrowserModule,
