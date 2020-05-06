@@ -24,4 +24,21 @@ export class ProjectsService {
         }, err => reject(err));
     });
   }
+
+  getAll() {
+    return this.afStore.collection('projects').snapshotChanges();
+  }
+
+  get(id: string) {
+    return this.afStore.collection('projects').doc(id).valueChanges();
+  }
+
+  delete(id: string) {
+    return this.afStore.collection('projects').doc(id).delete()
+      .then(res => {
+        this.snackbar.open('Successfully deleted project!', 'Close', {
+          duration: 5000
+        });
+    });
+  }
 }

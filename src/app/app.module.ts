@@ -18,6 +18,7 @@ import { ProjectListComponent } from './components/projects/project-list/project
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { ProjectAddComponent } from './components/projects/project-add/project-add.component';
+import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProjectAddComponent } from './components/projects/project-add/project-a
     SignUpComponent,
     LandingComponent,
     ProjectListComponent,
-    ProjectAddComponent
+    ProjectAddComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,

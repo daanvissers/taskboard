@@ -17,26 +17,30 @@
 
       <mat-accordion>
         <!-- *ngFor loop -->
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngFor="let project of projects">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              This is the project title
+              {{ project.payload.doc.data().name }}
             </mat-panel-title>
             <mat-panel-description>
-              <span class="mr-5">Status: In Progress</span>
+              <span class="mr-5">Status: {{ project.payload.doc.data().status }}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-panel-description>
-            <p>This is a summary of the content. </p>
+            <p class="mr-2">{{ project.payload.doc.data().description }} </p>
 
-            <p>Owner: Administrator</p>
+            <p>Owner: {{ project.payload.doc.data().owner }}</p>
           </mat-panel-description>
 
           <!-- Extra content, like buttons -->
           <hr>
 
-          <button mat-stroked-button color="basic" class="mr-2">Edit Project</button>
+          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.payload.doc.id]">View</button>
+          <button mat-stroked-button color="basic" class="mr-2">Edit</button>
           <button mat-stroked-button color="basic" class="mr-2">Archive</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteProject(project.payload.doc.id)">
+            <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
+          </button>
 
         </mat-expansion-panel>
 
