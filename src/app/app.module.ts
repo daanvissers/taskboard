@@ -10,14 +10,14 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { firebaseConfig } from '../environments/environment';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { MaterialModule } from './modules/material/material.module';
-import { FormsModule } from '@angular/forms';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AuthenticationService } from './services/authentication.service';
-import { ProjectsComponent } from './components/pages/projects/projects.component';
-import { LandingComponent } from './components/pages/landing/landing.component';
-import { CreateProjectComponent } from './components/pages/projects/create-project/create-project.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { ProjectListComponent } from './components/projects/project-list/project-list.component';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from './modules/material/material.module';
+import { ProjectAddComponent } from './components/projects/project-add/project-add.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +25,9 @@ import { CreateProjectComponent } from './components/pages/projects/create-proje
     ToolbarComponent,
     SignInComponent,
     SignUpComponent,
-    ProjectsComponent,
     LandingComponent,
-    CreateProjectComponent,
+    ProjectListComponent,
+    ProjectAddComponent
   ],
   imports: [
     BrowserModule,

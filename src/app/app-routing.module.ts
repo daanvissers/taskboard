@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectsComponent } from './components/pages/projects/projects.component';
-import { LandingComponent } from './components/pages/landing/landing.component';
+import { ProjectListComponent } from './components/projects/project-list/project-list.component';
+import { LandingComponent } from './components/landing/landing.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
+  { path: 'projects', component: ProjectListComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

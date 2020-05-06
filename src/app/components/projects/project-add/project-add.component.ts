@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Project} from '../../../../interfaces/project';
-import {AuthenticationService} from '../../../../services/authentication.service';
-import {ProjectsService} from '../../../../services/projects.service';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
+import { Project } from '../../../interfaces/project';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { ProjectsService } from '../../../services/projects.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-create-project',
-  templateUrl: './create-project.component.html',
-  styleUrls: ['./create-project.component.css']
+  selector: 'app-project-add',
+  templateUrl: './project-add.component.html',
+  styleUrls: ['./project-add.component.css']
 })
-export class CreateProjectComponent implements OnInit {
+export class ProjectAddComponent implements OnInit {
 
   @Input() title: string;
   @Input() description: string;
