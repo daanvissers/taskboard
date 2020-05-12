@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { ProjectAddComponent } from './components/projects/project-add/project-add.component';
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
+import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProjectDetailsComponent } from './components/projects/project-details/p
     LandingComponent,
     ProjectListComponent,
     ProjectAddComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    ProjectEditComponent
   ],
   imports: [
     BrowserModule,

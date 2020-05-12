@@ -36,7 +36,7 @@
           <hr>
 
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.payload.doc.id]">View</button>
-          <button mat-stroked-button color="basic" class="mr-2">Edit</button>
+          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects/edit', project.payload.doc.id]">Edit</button>
           <button mat-stroked-button color="basic" class="mr-2">Archive</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="deleteProject(project.payload.doc.id)">
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
