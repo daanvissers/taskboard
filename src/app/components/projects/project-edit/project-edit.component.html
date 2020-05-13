@@ -23,7 +23,7 @@
           <br>
           <mat-form-field appearance="fill">
             <mat-label>Description</mat-label>
-            <textarea matInput></textarea>
+            <textarea ngModel name="Description" #name="ngModel" matInput [ngModel]="project.description"></textarea>
           </mat-form-field>
           <br>
           <button class="btn btn-primary" type="submit">Edit</button>

@@ -3,4 +3,5 @@ export interface Project {
   description: string;
   status: string;
   owner: string;
+  isArchived: boolean;
 }

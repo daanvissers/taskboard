@@ -20,6 +20,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { ProjectAddComponent } from './components/projects/project-add/project-add.component';
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
+import { ProjectArchiveComponent } from './components/projects/project-archive/project-archive.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProjectEditComponent } from './components/projects/project-edit/project
     ProjectListComponent,
     ProjectAddComponent,
     ProjectDetailsComponent,
-    ProjectEditComponent
+    ProjectEditComponent,
+    ProjectArchiveComponent
   ],
   imports: [
     BrowserModule,

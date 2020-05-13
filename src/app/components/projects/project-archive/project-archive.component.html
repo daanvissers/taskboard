@@ -3,13 +3,10 @@
 
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4">Projects Overview</h3>
+        <h3 class="mb-4">Archived Projects</h3>
       </div>
       <div class="col-6">
-        <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
-          New Project
-        </button>
-        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/projects/archived']">Archived</button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/projects']">Active Projects</button>
       </div>
     </div>
 
@@ -18,7 +15,7 @@
       <mat-accordion>
         <!-- *ngFor loop -->
         <mat-expansion-panel *ngFor="let project of projects">
-          <mat-expansion-panel-header *ngIf="!project.payload.doc.data().isArchived">
+          <mat-expansion-panel-header *ngIf="project.payload.doc.data().isArchived">
             <mat-panel-title>
               {{ project.payload.doc.data().name }}
             </mat-panel-title>
@@ -36,12 +33,6 @@
           <hr>
 
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.payload.doc.id]">View</button>
-          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects/edit', project.payload.doc.id]">Edit</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="archiveProject(project.payload.doc.id)">Archive</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteProject(project.payload.doc.id)">
-            <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
-          </button>
-
         </mat-expansion-panel>
 
       </mat-accordion>

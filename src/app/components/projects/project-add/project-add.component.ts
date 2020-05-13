@@ -26,7 +26,8 @@ export class ProjectAddComponent implements OnInit {
       name: this.title,
       description: this.description,
       status: 'Not Started',
-      owner: this.authService.userData.uid
+      owner: this.authService.userData.uid,
+      isArchived: false
     };
     // Use the service to create project on FireBase
     this.projectsService.create(project);

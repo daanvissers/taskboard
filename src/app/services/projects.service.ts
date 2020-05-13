@@ -41,4 +41,11 @@ export class ProjectsService {
         });
     });
   }
+
+  archive(id: string) {
+    //TODO update verwerken
+    return this.afStore.collection('projects').doc(id)
+
+  }
+
 }

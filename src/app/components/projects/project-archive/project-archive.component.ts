@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectAddComponent } from '../project-add/project-add.component';
 import { ProjectsService } from 'src/app/services/projects.service';
-import { Project } from 'src/app/interfaces/project';
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.css']
+  selector: 'app-project-archive',
+  templateUrl: './project-archive.component.html',
+  styleUrls: ['./project-archive.component.css']
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectArchiveComponent implements OnInit {
 
   projects: any;
 
@@ -19,27 +18,11 @@ export class ProjectListComponent implements OnInit {
     this.getProjects();
   }
 
-  openCreate() {
-    this.dialog.open(ProjectAddComponent, {
-      height: '360px',
-      width: '600px'
-    });
-  }
-
   getProjects() {
     this.projectsService.getAll().subscribe(res => {
       this.projects = res;
     })
   }
-
-  deleteProject(id: string) {
-    this.projectsService.delete(id);
-  }
-
-  archiveProject(id: string) {
-    this.projectsService.archive(id);
-  }
-
 
 
 }
