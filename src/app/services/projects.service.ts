@@ -48,4 +48,8 @@ export class ProjectsService {
 
   }
 
+  update(id: string){
+    //TODO update verwerken
+  }
+
 }

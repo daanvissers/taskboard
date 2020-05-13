@@ -26,9 +26,12 @@ export class ProjectEditComponent implements OnInit {
     });
   }
 
+  update(id: string) {
+    this.projectsService.update(id);
+  }
+
   onSubmit(){
-
-
+    // this.update(id)
   }
 
 }
