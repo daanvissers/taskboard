@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Project } from 'src/app/interfaces/project';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { switchMap } from 'rxjs/operators';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-project-edit',
@@ -12,26 +13,32 @@ import { switchMap } from 'rxjs/operators';
 export class ProjectEditComponent implements OnInit {
 
   project: any;
+  @Input() name: string;
+  @Input() description: string;
+  @Input() owner: string;
 
-  constructor(private route: ActivatedRoute, private projectsService: ProjectsService) { }
+  constructor(private route: ActivatedRoute, private projectsService: ProjectsService, 
+                      @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this.getProject()
+    this.getProject();
   }
 
   getProject() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.project = this.projectsService.get(id).subscribe(res => {
+    // Get the project from the id passed onto the Material Dialog
+    this.project = this.projectsService.get(this.data.id).subscribe(res => {
       this.project = res;
     });
   }
 
-  update(id: string) {
-    this.projectsService.update(id);
-  }
+  update() {
+    let project = {
+      name: this.name,
+      description: this.description,
+      owner: this.owner,
+    };
 
-  onSubmit(){
-    // this.update(id)
+    this.projectsService.update(this.data.id, project);
   }
 
 }

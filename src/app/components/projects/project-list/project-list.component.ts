@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectAddComponent } from '../project-add/project-add.component';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { Project } from 'src/app/interfaces/project';
+import { ProjectEditComponent } from '../project-edit/project-edit.component';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-project-list',
@@ -30,6 +32,14 @@ export class ProjectListComponent implements OnInit {
     this.projectsService.getAll().subscribe(res => {
       this.projects = res;
     })
+  }
+
+  editProject(id: string) {
+    this.dialog.open(ProjectEditComponent, {
+      width: '450px',
+      height: '400px',
+      data: { id: id },
+    });
   }
 
   deleteProject(id: string) {
