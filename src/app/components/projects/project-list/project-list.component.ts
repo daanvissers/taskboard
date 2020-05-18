@@ -40,6 +40,4 @@ export class ProjectListComponent implements OnInit {
     this.projectsService.archive(id);
   }
 
-
-
 }

@@ -43,8 +43,20 @@ export class ProjectsService {
   }
 
   archive(id: string) {
-    //TODO update verwerken
-    return this.afStore.collection('projects').doc(id)
+
+    var project = this.afStore.collection('projects').doc(id);
+
+    // Set the "isArchived" field of the project
+    return project.update({
+        isArchived: true
+    })
+    .then(function() {
+        console.log("Project successfully updated!");
+    })
+    .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating project: ", error);
+    });
 
   }
 
