@@ -27,6 +27,7 @@ export class SprintsService {
   }
 
   getAll() {
+    //TODO Zo maken dat de sprints afhankelijk ophelaad worden van ProjectID
     return this.afStore.collection('sprints').snapshotChanges();
   }
 

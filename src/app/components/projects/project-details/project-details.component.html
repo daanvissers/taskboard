@@ -21,9 +21,10 @@
             <mat-panel-title>
               {{ sprint.payload.doc.data().title }}
             </mat-panel-title>
+<!--            Firebase data converted to seconds to display actual timestamp-->
             <mat-panel-description>
-              <span class="mr-5">Start Date: {{ sprint.payload.doc.data().startDate }}</span>
-              <span class="mr-5">End Date: {{ sprint.payload.doc.data().endDate }}</span>
+              <span class="mr-5">Start Date: {{ sprint.payload.doc.data().startDate.seconds * 1000| date:'short' }}</span>
+              <span class="mr-5">End Date: {{ sprint.payload.doc.data().endDate.seconds * 1000| date:'short'}}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-panel-description>
