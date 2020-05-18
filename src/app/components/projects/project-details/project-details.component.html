@@ -1,9 +1,50 @@
 <div class="container">
-    <mat-card class="mat-elevation-z3 p-4">
-        <div class="row">
-            <div class="col-6">
-                <h3 class="mb-4">{{ project.name }}</h3>
-            </div>
-        </div>
-    </mat-card>
+  <mat-card class="mat-elevation-z3 p-4">
+
+    <div class="row">
+      <div class="col-6">
+        <h3 class="mb-4">{{ project.name }}</h3>
+      </div>
+      <div class="col-6">
+        <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
+          New Sprint
+        </button>
+      </div>
+    </div>
+
+    <div style="height: 70vh;">
+
+      <mat-accordion>
+        <!-- *ngFor loop -->
+        <mat-expansion-panel *ngFor="let sprint of sprints">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ sprint.payload.doc.data().title }}
+            </mat-panel-title>
+            <mat-panel-description>
+              <span class="mr-5">Start Date: {{ sprint.payload.doc.data().startDate }}</span>
+              <span class="mr-5">End Date: {{ sprint.payload.doc.data().endDate }}</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-panel-description>
+            <p class="mr-2">{{ sprint.payload.doc.data().description }} </p>
+
+          </mat-panel-description>
+
+          <!-- Extra content, like buttons -->
+          <hr>
+
+
+          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/sprints', sprint.payload.doc.id]">View</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="editSprint(sprint.payload.doc.id)">Edit</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteSprint(sprint.payload.doc.id)">
+            <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
+          </button>
+
+        </mat-expansion-panel>
+
+      </mat-accordion>
+
+    </div>
+  </mat-card>
 </div>
