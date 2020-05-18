@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectAddComponent } from '../project-add/project-add.component';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
 import { stringify } from 'querystring';
+import {SprintAddComponent} from "../../sprints/sprint-add/sprint-add.component";
 
 
 @Component({
@@ -37,8 +38,8 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   openCreate() {
-    this.dialog.open(ProjectAddComponent, {
-      height: '360px',
+    this.dialog.open(SprintAddComponent, {
+      height: '500px',
       width: '600px'
     });
   }
