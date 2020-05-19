@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {Sprint} from "../interfaces/sprint";
 import {UserStory} from "../interfaces/user-story";
+import * as firebase from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +28,15 @@ export class UserStoryService {
     });
   }
 
-  // getUserStorysBySprint(string: sprintId){
-  //   this.afStore.collection('user-storys').
-  //
-  // }
+  get(id: string) {
+    return this.afStore.collection('user-storys').doc(id).valueChanges();
+  }
 
   getAll() {
     //TODO Zo maken dat de user story afhankelijk ophelaad worden van SprintID
     return this.afStore.collection('user-storys').snapshotChanges();
   }
+
+
 
 }

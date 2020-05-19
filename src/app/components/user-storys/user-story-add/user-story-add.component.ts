@@ -36,7 +36,7 @@ export class UserStoryAddComponent implements OnInit {
       description: this.description,
       status: "new",
       storyPoints: this.storyPoints,
-      owner: "Hans",
+      owner: null,
       sprintId: "XXXXX"
       // TODO: Huidig sprint ID ophalen
     };

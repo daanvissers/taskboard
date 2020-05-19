@@ -15,8 +15,3 @@ mat-grid-tile {
 :host >>> .mat-figure{
   align-items: start !important;
 }
-
-.user-story {
-  background: ghostwhite;
-
-}
