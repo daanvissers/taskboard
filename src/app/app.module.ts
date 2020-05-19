@@ -22,6 +22,7 @@ import { ProjectDetailsComponent } from './components/projects/project-details/p
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
 import { ProjectArchiveComponent } from './components/projects/project-archive/project-archive.component';
 import { SprintAddComponent } from './components/sprints/sprint-add/sprint-add.component';
+import { SprintDetailsComponent } from './components/sprints/sprint-details/sprint-details.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SprintAddComponent } from './components/sprints/sprint-add/sprint-add.c
     ProjectDetailsComponent,
     ProjectEditComponent,
     ProjectArchiveComponent,
-    SprintAddComponent
+    SprintAddComponent,
+    SprintDetailsComponent
   ],
   imports: [
     BrowserModule,
