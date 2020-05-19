@@ -23,6 +23,8 @@ import { ProjectEditComponent } from './components/projects/project-edit/project
 import { ProjectArchiveComponent } from './components/projects/project-archive/project-archive.component';
 import { SprintAddComponent } from './components/sprints/sprint-add/sprint-add.component';
 import { SprintDetailsComponent } from './components/sprints/sprint-details/sprint-details.component';
+import { UserStoryAddComponent } from './components/user-storys/user-story-add/user-story-add.component';
+import { UserStoryDetailsComponent } from './components/user-storys/user-story-details/user-story-details.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { SprintDetailsComponent } from './components/sprints/sprint-details/spri
     ProjectEditComponent,
     ProjectArchiveComponent,
     SprintAddComponent,
-    SprintDetailsComponent
+    SprintDetailsComponent,
+    UserStoryAddComponent,
+    UserStoryDetailsComponent
   ],
   imports: [
     BrowserModule,

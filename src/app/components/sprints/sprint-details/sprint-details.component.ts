@@ -3,6 +3,7 @@ import {SprintsService} from "../../../services/sprints.service";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {SprintAddComponent} from "../sprint-add/sprint-add.component";
 import {MatDialog} from "@angular/material/dialog";
+import {UserStoryAddComponent} from "../../user-storys/user-story-add/user-story-add.component";
 
 
 @Component({
@@ -30,7 +31,7 @@ export class SprintDetailsComponent implements OnInit {
 
   //TODO vervangen naar user story create
   openCreate() {
-    this.dialog.open(SprintAddComponent, {
+    this.dialog.open(UserStoryAddComponent, {
       height: '500px',
       width: '600px'
     });
