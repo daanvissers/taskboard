@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Project } from 'src/app/interfaces/project';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from 'src/app/services/projects.service';
-import { switchMap } from 'rxjs/operators';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-project-edit',
@@ -13,32 +11,35 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ProjectEditComponent implements OnInit {
 
   project: any;
+
   @Input() name: string;
   @Input() description: string;
   @Input() owner: string;
 
-  constructor(private route: ActivatedRoute, private projectsService: ProjectsService, 
-                      @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private projectsService: ProjectsService, public dialog: MatDialog,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    // TODO: Load existing project values into Input fields
     this.getProject();
   }
 
   getProject() {
     // Get the project from the id passed onto the Material Dialog
-    this.project = this.projectsService.get(this.data.id).subscribe(res => {
+    this.project = this.projectsService.get(this.data.id)
+    .subscribe(res => {
       this.project = res;
     });
   }
 
   update() {
-    let project = {
+    const project = {
       name: this.name,
       description: this.description,
-      owner: this.owner,
+      // owner: this.owner,
     };
-
     this.projectsService.update(this.data.id, project);
+    this.dialog.closeAll();
   }
 
 }

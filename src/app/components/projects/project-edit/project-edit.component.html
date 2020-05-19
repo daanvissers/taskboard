@@ -1,31 +1,36 @@
 <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h3 class="mb-4">Edit {{ project.name }}</h3>
-      </div>
+  <div class="row">
+    <div class="col-12">
+      <h2>Edit {{ project.name }}</h2>
     </div>
-    <div class="row">
-      <div class="container">
-          <mat-form-field class="full-width">
-            <mat-label>Name</mat-label>
-            <input matInput [(ngModel)]="name">
-          </mat-form-field>
+  </div>
 
-          <br>
-          <!-- TODO  owner wijzigen van project???-->
-          <mat-form-field class="full-width">
-            <mat-label>Change Owner</mat-label>
-            <mat-select>
-              <mat-option [(ngModel)]="owner">{{ project.owner }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br>
-          <mat-form-field class="full-width">
-            <mat-label>Description</mat-label>
-            <textarea [(ngModel)]="description"></textarea>
-          </mat-form-field>
-          <br>
-          <button mat-flat-button color="primary" (click)="update()">Save</button>
-      </div>
+  <div class="row mt-4">
+    <div class="col-12">
+
+      <mat-form-field class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name">
+      </mat-form-field>
+
+      <!-- TODO: Change Owner field -->
+      <!-- <mat-form-field class="full-width">
+        <mat-label>Change Owner</mat-label>
+        <mat-select matInput [(ngModel)]="owner">
+          <mat-option>{{ project.owner }}</mat-option>
+        </mat-select>
+      </mat-form-field> -->
+        
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="description"></textarea>
+      </mat-form-field>
     </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-12">
+      <button class="float-right mr-2" mat-flat-button color="primary" (click)="update()">Update</button>
+    </div>
+  </div>
 </div>
