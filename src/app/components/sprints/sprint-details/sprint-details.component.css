@@ -10,3 +10,13 @@ mat-grid-tile {
 .grid-top{
   background: #ffffff;
 }
+
+/*Makes cards display at the top of grid*/
+:host >>> .mat-figure{
+  align-items: start !important;
+}
+
+.user-story {
+  background: ghostwhite;
+
+}

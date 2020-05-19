@@ -3,5 +3,6 @@ export interface UserStory {
     description: string,
     status: string,
     storyPoints: number,
-    owner: string
+    owner: string,
+    sprintId: string
 }
