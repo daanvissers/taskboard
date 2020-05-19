@@ -25,7 +25,11 @@
 
   <mat-grid-tile id="user-story">
     <div class="card-group justify-content-center">
-      <p class="text-success">Add new User Story to start the sprint!</p>
+      <app-user-story-details *ngFor="let story of userStorys">
+
+      </app-user-story-details>
+
+
     </div>
   </mat-grid-tile>
   <mat-grid-tile></mat-grid-tile>

@@ -27,6 +27,11 @@ export class UserStoryService {
     });
   }
 
+  // getUserStorysBySprint(string: sprintId){
+  //   this.afStore.collection('user-storys').
+  //
+  // }
+
   getAll() {
     //TODO Zo maken dat de user story afhankelijk ophelaad worden van SprintID
     return this.afStore.collection('user-storys').snapshotChanges();
