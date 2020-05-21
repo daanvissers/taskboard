@@ -8,8 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProjectAddComponent } from '../project-add/project-add.component';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
 import { stringify } from 'querystring';
-import {SprintAddComponent} from "../../sprints/sprint-add/sprint-add.component";
-
+import { SprintAddComponent } from "../../sprints/sprint-add/sprint-add.component";
 
 @Component({
   selector: 'app-project-details',
@@ -22,17 +21,21 @@ export class ProjectDetailsComponent implements OnInit {
   projects: any;
   sprints: any;
 
+  projectId: string;
+
   constructor(private route: ActivatedRoute, private projectsService: ProjectsService,
-              public dialog: MatDialog, private sprintsService: SprintsService) { }
+              public dialog: MatDialog, private sprintsService: SprintsService)
+  {
+      this.projectId = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit(): void {
     this.getProject();
-    this.getSprints();
+    this.getSprints(this.projectId);
   }
 
   getProject() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.project = this.projectsService.get(id).subscribe(res => {
+    this.project = this.projectsService.get(this.projectId).subscribe(res => {
       this.project = res;
     });
   }
@@ -40,12 +43,13 @@ export class ProjectDetailsComponent implements OnInit {
   openCreate() {
     this.dialog.open(SprintAddComponent, {
       height: '500px',
-      width: '600px'
+      width: '600px',
+      data: { projectId: this.projectId }
     });
   }
 
-  getSprints() {
-    this.sprintsService.getAll().subscribe(res => {
+  getSprints(projectId: string) {
+    this.sprintsService.getByProject(projectId).subscribe(res => {
       this.sprints = res;
     })
   }

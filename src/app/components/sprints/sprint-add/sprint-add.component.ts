@@ -1,12 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Sprint} from "../../../interfaces/sprint";
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { Sprint } from "../../../interfaces/sprint";
 import { Project } from '../../../interfaces/project';
-import {AuthenticationService} from "../../../services/authentication.service";
-import {MatDialog} from "@angular/material/dialog";
-import {SprintsService} from "../../../services/sprints.service";
-import {FormControl} from "@angular/forms";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { MatDialog } from "@angular/material/dialog";
+import { SprintsService} from "../../../services/sprints.service";
+import { FormControl } from "@angular/forms";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {ProjectsService} from "../../../services/projects.service";
+import { ProjectsService } from "../../../services/projects.service";
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -24,36 +25,31 @@ export class SprintAddComponent implements OnInit {
   project: any;
 
   constructor(private route: ActivatedRoute, private authService: AuthenticationService, public dialog: MatDialog,
-              private sprintService: SprintsService, private projectsService: ProjectsService) { }
+              private sprintService: SprintsService, private projectsService: ProjectsService,
+              @Inject(MAT_DIALOG_DATA) public data: any)
+  {
 
-  ngOnInit(): void {
-    const projId = this.route.snapshot.paramMap.get('id');
-    console.log(projId);
   }
 
+  ngOnInit() {
+    this.getProject();
+  }
 
-  public getProjectId(): string {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.project = this.projectsService.get(id).subscribe(res => {
+  getProject() {
+    // Get the project from the id passed onto the Material Dialog
+    this.project = this.projectsService.get(this.data.projectId).subscribe(res => {
       this.project = res;
     });
-
-    console.log(id);
-    return id;
   }
 
   create() {
-    const projId = this.route.snapshot.paramMap.get('id');
-    console.log(projId);
-
     // Create new Sprint object
     const sprint: Sprint = {
       title: this.title,
       description: this.description,
       startDate: this.startDate,
       endDate: this.endDate,
-      // TODO: Huidig project ID ophalen
-      projectId: this.route.snapshot.paramMap.get('id')
+      projectId: this.data.projectId
     };
     // Use the service to create sprint on FireBase
     this.sprintService.create(sprint);
