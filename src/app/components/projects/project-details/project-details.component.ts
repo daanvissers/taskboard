@@ -6,7 +6,7 @@ import { SprintsService } from 'src/app/services/sprints.service';
 import { switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectAddComponent } from '../project-add/project-add.component';
-import { ProjectEditComponent } from '../project-edit/project-edit.component';
+import { SprintEditComponent } from '../../sprints/sprint-edit/sprint-edit.component';
 import { stringify } from 'querystring';
 import { SprintAddComponent } from "../../sprints/sprint-add/sprint-add.component";
 
@@ -55,7 +55,7 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   editSprint(id: string) {
-    this.dialog.open(ProjectEditComponent, {
+    this.dialog.open(SprintEditComponent, {
       width: '450px',
       height: '400px',
       data: { id: id },
@@ -65,6 +65,5 @@ export class ProjectDetailsComponent implements OnInit {
   deleteSprint(id: string) {
     this.sprintsService.delete(id);
   }
-
 
 }
