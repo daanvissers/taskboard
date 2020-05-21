@@ -1,0 +1,17 @@
+mat-grid-tile {
+  background: aliceblue;
+  border-left: 3px solid #ffffff;
+}
+
+#user-story{
+  background: #ffffff;
+}
+
+.grid-top{
+  background: #ffffff;
+}
+
+/*Makes cards display at the top of grid*/
+:host >>> .mat-figure{
+  align-items: start !important;
+}

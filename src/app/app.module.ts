@@ -15,12 +15,17 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AuthenticationService } from './services/authentication.service';
 import { LandingComponent } from './components/landing/landing.component';
 import { ProjectListComponent } from './components/projects/project-list/project-list.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MaterialModule } from './modules/material/material.module';
 import { ProjectAddComponent } from './components/projects/project-add/project-add.component';
 import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
 import { ProjectArchiveComponent } from './components/projects/project-archive/project-archive.component';
+import { SprintAddComponent } from './components/sprints/sprint-add/sprint-add.component';
+import { SprintDetailsComponent } from './components/sprints/sprint-details/sprint-details.component';
+import { UserStoryAddComponent } from './components/user-storys/user-story-add/user-story-add.component';
+import { UserStoryDetailsComponent } from './components/user-storys/user-story-details/user-story-details.component';
+import { SprintEditComponent } from './components/sprints/sprint-edit/sprint-edit.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,12 @@ import { ProjectArchiveComponent } from './components/projects/project-archive/p
     ProjectAddComponent,
     ProjectDetailsComponent,
     ProjectEditComponent,
-    ProjectArchiveComponent
+    ProjectArchiveComponent,
+    SprintAddComponent,
+    SprintDetailsComponent,
+    UserStoryAddComponent,
+    UserStoryDetailsComponent,
+    SprintEditComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +53,8 @@ import { ProjectArchiveComponent } from './components/projects/project-archive/p
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
