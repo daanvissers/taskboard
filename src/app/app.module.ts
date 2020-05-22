@@ -26,6 +26,8 @@ import { SprintDetailsComponent } from './components/sprints/sprint-details/spri
 import { UserStoryAddComponent } from './components/user-storys/user-story-add/user-story-add.component';
 import { UserStoryDetailsComponent } from './components/user-storys/user-story-details/user-story-details.component';
 import { SprintEditComponent } from './components/sprints/sprint-edit/sprint-edit.component';
+import { UserStoryListComponent } from './components/user-storys/user-story-list/user-story-list.component';
+import { UserStoryEditComponent } from './components/user-storys/user-story-edit/user-story-edit.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { SprintEditComponent } from './components/sprints/sprint-edit/sprint-edi
     SprintDetailsComponent,
     UserStoryAddComponent,
     UserStoryDetailsComponent,
-    SprintEditComponent
+    SprintEditComponent,
+    UserStoryListComponent,
+    UserStoryEditComponent
   ],
   imports: [
     BrowserModule,

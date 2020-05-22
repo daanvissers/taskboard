@@ -7,6 +7,7 @@ import { ProjectDetailsComponent } from './components/projects/project-details/p
 import {ProjectEditComponent} from "./components/projects/project-edit/project-edit.component";
 import {ProjectArchiveComponent} from "./components/projects/project-archive/project-archive.component";
 import {SprintDetailsComponent} from "./components/sprints/sprint-details/sprint-details.component";
+import {UserStoryListComponent} from "./components/user-storys/user-story-list/user-story-list.component";
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'projects/edit/:id', component: ProjectEditComponent, canActivate: [AuthGuard]},
 
   { path: 'sprints/:id', component: SprintDetailsComponent, canActivate: [AuthGuard]},
+
+  { path: 'user-stories/:id', component: UserStoryListComponent, canActivate: [AuthGuard]}
 
 ];
 

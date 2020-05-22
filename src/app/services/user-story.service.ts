@@ -33,8 +33,23 @@ export class UserStoryService {
   }
 
   getAll() {
-    //TODO Zo maken dat de user story afhankelijk ophelaad worden van SprintID
     return this.afStore.collection('user-storys').snapshotChanges();
+  }
+
+  // Gets a collection of User Stories by Project ID
+  getByProject(id: string) {
+    return this.afStore.collection('user-storys', ref =>
+      ref.where('projectId', '==', id)
+    ).snapshotChanges();
+  }
+
+  delete(id: string) {
+    return this.afStore.collection('user-storys').doc(id).delete()
+      .then(res => {
+        this.snackbar.open('Successfully deleted User Story!', 'Close', {
+          duration: 5000
+        });
+      });
   }
 
 

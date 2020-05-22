@@ -35,6 +35,7 @@
           <!-- Extra content, like buttons -->
           <hr>
 
+          <button mat-stroked-button color="primary" class="mr-2" [routerLink]="['/user-stories', project.payload.doc.id]">User Stories</button>
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.payload.doc.id]">View</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="editProject(project.payload.doc.id)">Edit</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="archiveProject(project.payload.doc.id)">Archive</button>
