@@ -4,4 +4,5 @@ export interface Project {
   status: string;
   owner: string;
   isArchived: boolean;
+  members: string[];
 }

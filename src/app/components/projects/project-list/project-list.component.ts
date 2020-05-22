@@ -6,6 +6,9 @@ import { Project } from 'src/app/interfaces/project';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
 import { stringify } from 'querystring';
 
+import { flatMap, filter, map, switchMap } from 'rxjs/operators';
+import { Observable, observable, combineLatest } from 'rxjs';
+
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -31,7 +34,8 @@ export class ProjectListComponent implements OnInit {
   getProjects() {
     this.projectsService.getAll().subscribe(res => {
       this.projects = res;
-    })
+      console.log(this.projects);
+    });
   }
 
   editProject(id: string) {
