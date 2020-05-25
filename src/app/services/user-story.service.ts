@@ -52,6 +52,18 @@ export class UserStoryService {
       });
   }
 
+  update(id: string, userStory: any){
+    var story = this.afStore.collection('user-storys').doc(id);
+
+    return story.update(userStory).then(function() {
+      console.log("User Story successfully updated!");
+    })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating User Story: ", error);
+      });
+  }
+
 
 
 }
