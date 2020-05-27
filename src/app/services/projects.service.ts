@@ -98,4 +98,18 @@ export class ProjectsService {
     });
   }
 
+  getProjectMembers(projectId: string) {
+    return this.afStore.collection('project-members', ref => ref
+                .where('projectId', '==', projectId))
+                .valueChanges()
+                .pipe(
+                  map(docs => docs.map(docu => {
+                    this.userService.getUser(docu['userId']).subscribe(result => {
+                      docu['user'] = result;
+                    });
+                    return docu;
+                  }))
+                );
+  }
+
 }

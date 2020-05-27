@@ -17,6 +17,7 @@ import { Observable, observable, combineLatest } from 'rxjs';
 export class ProjectListComponent implements OnInit {
 
   projects: any;
+  members: any[];
 
   constructor(public dialog: MatDialog, private projectsService: ProjectsService) { }
 
@@ -35,6 +36,12 @@ export class ProjectListComponent implements OnInit {
     this.projectsService.getAll().subscribe(res => {
       this.projects = res;
       console.log(this.projects);
+    });
+  }
+
+  getProjectMembers(projectId: string) {
+    this.projectsService.getProjectMembers(projectId).subscribe(res => {
+      this.members = res;
     });
   }
 
