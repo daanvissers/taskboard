@@ -6,7 +6,7 @@ import { Project } from 'src/app/interfaces/project';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
 import { stringify } from 'querystring';
 
-import { flatMap, filter, map, switchMap } from 'rxjs/operators';
+import { flatMap, filter, map, switchMap, tap } from 'rxjs/operators';
 import { Observable, observable, combineLatest } from 'rxjs';
 
 @Component({
@@ -17,12 +17,11 @@ import { Observable, observable, combineLatest } from 'rxjs';
 export class ProjectListComponent implements OnInit {
 
   projects: any;
-  members: any[];
 
   constructor(public dialog: MatDialog, private projectsService: ProjectsService) { }
 
   ngOnInit(): void {
-    this.getProjects();
+    this.projects = this.projectsService.getAll();
   }
 
   openCreate() {
@@ -33,16 +32,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   getProjects() {
-    this.projectsService.getAll().subscribe(res => {
-      this.projects = res;
-      console.log(this.projects);
-    });
-  }
-
-  getProjectMembers(projectId: string) {
-    this.projectsService.getProjectMembers(projectId).subscribe(res => {
-      this.members = res;
-    });
+    //
   }
 
   editProject(id: string) {

@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { UserService } from './user.service';
 import { Project } from '../interfaces/project';
+import { User } from '../interfaces/user';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { flatMap, filter, map, switchMap } from 'rxjs/operators';
+import { flatMap, filter, map, switchMap, zip } from 'rxjs/operators';
 import { Observable, observable, combineLatest, of } from 'rxjs';
 
 @Injectable({
@@ -30,29 +31,7 @@ export class ProjectsService {
   }
 
   getAll() {
-    const projectsCollection = this.afStore.collection<Project>('projects');
-    const projects$ = projectsCollection.snapshotChanges().pipe(
-      // Map together the Project details, the ID, and grab the Members
-      map(values => values.map(obj => {
-        let data = obj.payload.doc.data();  // Project details
-        const id = obj.payload.doc.id;      // ID string
-
-        let members = [];                   // Associated Members
-        data.members.forEach(el => {
-          if(el !== "") {
-            this.userService.getUser(el).subscribe(res => {
-              members.push(res);
-            });
-          }
-        });
-        // Replace the old array with only Member ID's with actual Users
-        data.members = members;
-
-        return { id, ...data };
-      })),
-    );
-
-    return projects$;
+    return this.afStore.collection('projects').valueChanges();
   }
 
   get(id: string) {
@@ -98,18 +77,20 @@ export class ProjectsService {
     });
   }
 
-  getProjectMembers(projectId: string) {
-    return this.afStore.collection('project-members', ref => ref
-                .where('projectId', '==', projectId))
-                .valueChanges()
-                .pipe(
-                  map(docs => docs.map(docu => {
-                    this.userService.getUser(docu['userId']).subscribe(result => {
-                      docu['user'] = result;
-                    });
-                    return docu;
-                  }))
-                );
+  getProjectMembers(project: Project) {
+
+    let members = [];
+
+    if(project.members.length) {
+      project.members.forEach(member => {
+          let usr = this.userService.getUser(member['user']);
+          members.push(usr);
+      });
+    } else {
+      console.log("The array is empty");
+    }
+
+    return members;
   }
 
 }

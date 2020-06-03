@@ -17,7 +17,7 @@
 
       <mat-accordion>
         <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let project of projects" (click)="getProjectMembers(project.id)">
+        <mat-expansion-panel *ngFor="let project of projects | async">
           <mat-expansion-panel-header *ngIf="!project.isArchived">
             <mat-panel-title>
               {{ project.name }}
@@ -48,8 +48,7 @@
                   <span class="font-weight-bold">Members: </span>
                   <div class="mt-1">
                     <mat-chip-list>
-                      <mat-chip *ngFor="let member of members">
-                        {{ member.user.displayName || 'Anonymous User' }} -
+                      <mat-chip *ngFor="let member of project.members">
                         {{ member.role }}
                       </mat-chip>
                     </mat-chip-list>
