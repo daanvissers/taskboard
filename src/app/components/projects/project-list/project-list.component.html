@@ -68,9 +68,9 @@
           <hr>
 
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.id]">View</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="editProject(project.id)">Edit</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="archiveProject(project.id)">Archive</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteProject(project.id)">
+          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="editProject(project.id)">Edit</button>
+          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="archiveProject(project.id)">Archive</button>
+          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="deleteProject(project.id)">
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
           </button>
 

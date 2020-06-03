@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectAddComponent } from '../project-add/project-add.component';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { Project } from 'src/app/interfaces/project';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
@@ -23,7 +24,8 @@ export class ProjectListComponent implements OnInit {
   selectedProject: any;
 
   constructor(public dialog: MatDialog, private projectsService: ProjectsService,
-              private afStore: AngularFirestore, private userService: UserService) { }
+              private afStore: AngularFirestore, private userService: UserService,
+              private auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.projects = this.projectsService.getAll();
@@ -66,6 +68,17 @@ export class ProjectListComponent implements OnInit {
     this.selectedProject.members.forEach(member => {
         member.user = this.userService.getUser(member.uid);
     });
+
+    // Determine whether the currently logged in user can edit
+    let canEdit = (this.selectedProject.members
+                            .map(x => x.uid)
+                            .includes(this.auth.userData.uid));
+
+    // Overwrite canEdit if the logged in user is the owner
+    if (this.auth.userData.uid === this.selectedProject.owner)
+      canEdit = true;
+
+    this.selectedProject.canEdit = canEdit;
   }
 
 }
