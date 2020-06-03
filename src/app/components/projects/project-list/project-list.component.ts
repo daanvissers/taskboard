@@ -64,6 +64,10 @@ export class ProjectListComponent implements OnInit {
   openProject(project: Project) {
     this.selectedProject = project;
 
+    // Retrieve the owner's User object
+    const uid = this.selectedProject.owner;
+    this.selectedProject.ownerUser = this.userService.getUser(uid);
+
     // Retrieve the Project's Members as Users
     this.selectedProject.members.forEach(member => {
         member.user = this.userService.getUser(member.uid);
