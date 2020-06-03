@@ -17,7 +17,7 @@
 
       <mat-accordion>
         <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let project of projects | async">
+        <mat-expansion-panel *ngFor="let project of projects | async" (opened)="openProject(project)">
           <mat-expansion-panel-header *ngIf="!project.isArchived">
             <mat-panel-title>
               {{ project.name }}
@@ -26,20 +26,21 @@
               <span class="mr-5">Status: {{ project.status }}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <mat-panel-description>
 
+          <!-- Project details -- work with selectedProject from here on -->
+          <mat-panel-description>
             <div class="container p-0">
               <div class="row">
                 <div class="col-12">
                   <span class="font-weight-bold">Owner: </span>
-                  {{ project.owner }}
+                  {{ selectedProject.owner }}
                 </div>
               </div>
 
               <div class="row mt-2">
                 <div class="col-12">
                   <span class="font-weight-bold">Description: </span>
-                  <p>{{ project.description }}</p>
+                  <p>{{ selectedProject.description }}</p>
                 </div>
               </div>
 
@@ -48,8 +49,13 @@
                   <span class="font-weight-bold">Members: </span>
                   <div class="mt-1">
                     <mat-chip-list>
-                      <mat-chip *ngFor="let member of project.members">
-                        {{ member.role }}
+                      <mat-chip *ngFor='let member of selectedProject.members'>
+                        <span *ngIf='member.user | async as user'>
+                          {{ user.displayName }}:
+                        </span>
+                        <span class="ml-1">
+                          {{ member.role }}
+                        </span>
                       </mat-chip>
                     </mat-chip-list>
                   </div>

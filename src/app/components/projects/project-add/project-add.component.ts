@@ -31,7 +31,7 @@ export class ProjectAddComponent implements OnInit {
       members: [
         {
           'role': 'Owner',
-          'user': this.authService.userData.uid
+          'uid': this.authService.userData.uid
         }
       ],
     };
