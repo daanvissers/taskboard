@@ -64,4 +64,8 @@ export class UserStoryListComponent implements OnInit {
     this.userStorysService.delete(id);
   }
 
+  archiveUserStory(id: string) {
+    this.userStorysService.archive(id);
+  }
+
 }

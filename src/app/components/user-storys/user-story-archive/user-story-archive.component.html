@@ -1,0 +1,44 @@
+
+
+<div class="container">
+  <mat-card class="mat-elevation-z3 p-4">
+
+    <div class="row">
+      <div class="col-6">
+        <h3 class="mb-4">Archived User Stories for {{ project.name }}</h3>
+      </div>
+      <div class="col-6">
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories', project.id]">Active User Stories</button>
+      </div>
+    </div>
+
+    <div style="height: 70vh;">
+
+      <mat-accordion>
+        <!-- *ngFor loop -->
+        <mat-expansion-panel *ngFor="let us of userStorys">
+          <mat-expansion-panel-header *ngIf="us.payload.doc.data().isArchived">
+            <mat-panel-title>
+              {{ us.payload.doc.data().title }}
+            </mat-panel-title>
+            <mat-panel-description>
+              <span class="mr-5">Story points: {{ us.payload.doc.data().storyPoints}}</span>
+              <span class="mr-5">Owner: {{ us.payload.doc.data().owner}}</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-panel-description>
+            <p class="mr-2">{{ us.payload.doc.data().description }} </p>
+
+          </mat-panel-description>
+
+          <!-- Extra content, like buttons -->
+          <hr>
+
+          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/user-stories', us.payload.doc.id]">View</button>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+
+    </div>
+  </mat-card>
+</div>

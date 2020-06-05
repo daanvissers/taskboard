@@ -22,7 +22,8 @@ export class UserStoryAddComponent implements OnInit {
   @Input() storyPoints: number;
 
 
-  constructor(private route: ActivatedRoute, private authService: AuthenticationService, public dialog: MatDialog,
+  constructor(private route: ActivatedRoute, private authService: AuthenticationService,
+              public dialog: MatDialog,
               private sprintService: SprintsService, private projectsService: ProjectsService,
               private userStoryService: UserStoryService) { }
 
@@ -30,17 +31,19 @@ export class UserStoryAddComponent implements OnInit {
   }
 
   create() {
-    // Create new Sprint object
+    // Create new User Story object
     const userStory: UserStory = {
       title: this.title,
       description: this.description,
       status: "new",
       storyPoints: this.storyPoints,
       owner: null,
-      sprintId: "XXXXX"
-      // TODO: Huidig sprint ID ophalen
+      isArchived: false,
+      // TODO: Huidig sprint en project ID ophalen werkend krijgen
+      sprintId: this.route.snapshot.paramMap.get('id2'),
+      projectId: this.route.snapshot.paramMap.get('id1')
     };
-    // Use the service to create sprint on FireBase
+    // Use the service to create User Story on FireBase
     this.userStoryService.create(userStory);
     this.dialog.closeAll();
   }

@@ -3,12 +3,14 @@
 
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4">{{ project.name }}</h3>
+        <h3 class="mb-4"><i>User Stories:</i> {{ project.name }}</h3>
       </div>
       <div class="col-6">
         <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
           New User Story
         </button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/archived', project.id]">Archived</button>
+
       </div>
     </div>
 
@@ -17,7 +19,7 @@
       <mat-accordion>
         <!-- *ngFor loop -->
         <mat-expansion-panel *ngFor="let us of userStorys">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header *ngIf="!us.payload.doc.data().isArchived">
             <mat-panel-title>
               {{ us.payload.doc.data().title }}
             </mat-panel-title>
@@ -25,7 +27,6 @@
               <span class="mr-5">Status: {{ us.payload.doc.data().status}}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <!-- Firebase data converted to seconds to display actual timestamp -->
             <mat-panel-description>
               <span class="mr-5">Story points: {{ us.payload.doc.data().storyPoints}}</span>
               <span class="mr-5">Owner: {{ us.payload.doc.data().owner}}</span>
@@ -41,7 +42,9 @@
 
 
           <button mat-stroked-button color="basic" class="mr-2" (click)="editUserStory(us.payload.doc.id)">Edit</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="archiveUserStory(us.payload.doc.id)">Archive</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="deleteUserStory(us.payload.doc.id)">
+
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
           </button>
 

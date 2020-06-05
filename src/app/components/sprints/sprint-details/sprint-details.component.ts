@@ -28,7 +28,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   getSprint() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id2');
     this.sprint = this.sprintsService.get(id).subscribe(res => {
       this.sprint = res;
     });

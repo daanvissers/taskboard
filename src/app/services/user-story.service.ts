@@ -52,7 +52,25 @@ export class UserStoryService {
       });
   }
 
-  update(id: string, userStory: any){
+  archive(id: string) {
+
+    var userStory = this.afStore.collection('user-storys').doc(id);
+
+    // Set the "isArchived" field of the project
+    return userStory.update({
+      isArchived: true
+    })
+      .then(function() {
+        console.log("User Story successfully updated!");
+      })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating User Story: ", error);
+      });
+  }
+
+
+    update(id: string, userStory: any){
     var story = this.afStore.collection('user-storys').doc(id);
 
     return story.update(userStory).then(function() {

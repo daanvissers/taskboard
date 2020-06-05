@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectAddComponent } from '../project-add/project-add.component';
 import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
