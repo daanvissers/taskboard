@@ -7,6 +7,8 @@ import { ProjectDetailsComponent } from './components/projects/project-details/p
 import {ProjectEditComponent} from "./components/projects/project-edit/project-edit.component";
 import {ProjectArchiveComponent} from "./components/projects/project-archive/project-archive.component";
 import {SprintDetailsComponent} from "./components/sprints/sprint-details/sprint-details.component";
+import {UserStoryListComponent} from "./components/user-storys/user-story-list/user-story-list.component";
+import {UserStoryArchiveComponent} from "./components/user-storys/user-story-archive/user-story-archive.component";
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -16,7 +18,10 @@ const routes: Routes = [
   { path: 'projects/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard]},
   { path: 'projects/edit/:id', component: ProjectEditComponent, canActivate: [AuthGuard]},
 
-  { path: 'sprints/:id', component: SprintDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'sprints/:project-id/:sprint-id', component: SprintDetailsComponent, canActivate: [AuthGuard]},
+
+  { path: 'user-stories/:id', component: UserStoryListComponent, canActivate: [AuthGuard]},
+  { path: 'user-stories/archived/:id', component: UserStoryArchiveComponent, canActivate: [AuthGuard]}
 
 ];
 

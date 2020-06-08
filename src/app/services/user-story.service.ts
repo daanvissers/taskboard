@@ -33,10 +33,59 @@ export class UserStoryService {
   }
 
   getAll() {
-    //TODO Zo maken dat de user story afhankelijk ophelaad worden van SprintID
     return this.afStore.collection('user-storys').snapshotChanges();
   }
 
+  // Gets a collection of User Stories by Project ID
+  getByProject(id: string) {
+    return this.afStore.collection('user-storys', ref =>
+      ref.where('projectId', '==', id)
+    ).snapshotChanges();
+  }
+
+  delete(id: string) {
+    return this.afStore.collection('user-storys').doc(id).delete()
+      .then(res => {
+        this.snackbar.open('Successfully deleted User Story!', 'Close', {
+          duration: 5000
+        });
+      });
+  }
+
+  archive(id: string) {
+
+    var userStory = this.afStore.collection('user-storys').doc(id);
+
+    // Set the "isArchived" field of the project
+    return userStory.update({
+      isArchived: true
+    })
+      .then(function() {
+        console.log("User Story successfully updated!");
+      })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating User Story: ", error);
+      });
+  }
 
 
+    update(id: string, userStory: any){
+    var story = this.afStore.collection('user-storys').doc(id);
+
+    return story.update(userStory).then(function() {
+      console.log("User Story successfully updated!");
+    })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating User Story: ", error);
+      });
+  }
+
+
+  getBySprint(sprintId: string) {
+    return this.afStore.collection('user-storys', ref => ref
+                        .where('sprintId', '==', sprintId))
+                        .valueChanges();
+  }
 }

@@ -27,6 +27,9 @@ import { UserStoryAddComponent } from './components/user-storys/user-story-add/u
 import { UserStoryDetailsComponent } from './components/user-storys/user-story-details/user-story-details.component';
 import { SprintEditComponent } from './components/sprints/sprint-edit/sprint-edit.component';
 import { ProjectMemberAddComponent } from './components/projects/project-member-add/project-member-add.component';
+import { UserStoryListComponent } from './components/user-storys/user-story-list/user-story-list.component';
+import { UserStoryEditComponent } from './components/user-storys/user-story-edit/user-story-edit.component';
+import { UserStoryArchiveComponent } from './components/user-storys/user-story-archive/user-story-archive.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { ProjectMemberAddComponent } from './components/projects/project-member-
     UserStoryAddComponent,
     UserStoryDetailsComponent,
     SprintEditComponent,
-    ProjectMemberAddComponent
+    ProjectMemberAddComponent,
+    UserStoryListComponent,
+    UserStoryEditComponent,
+    UserStoryArchiveComponent
   ],
   imports: [
     BrowserModule,

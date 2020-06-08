@@ -4,5 +4,7 @@ export interface UserStory {
     status: string,
     storyPoints: number,
     owner: string,
-    sprintId: string
+    sprintId: string,
+    projectId: string,
+    isArchived: boolean
 }

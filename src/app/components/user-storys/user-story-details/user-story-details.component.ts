@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SprintsService} from "../../../services/sprints.service";
 import {UserStoryService} from "../../../services/user-story.service";
@@ -10,8 +10,8 @@ import {UserStoryService} from "../../../services/user-story.service";
 })
 export class UserStoryDetailsComponent implements OnInit {
 
-  userStory: any;
-
+  @Input() story: any;
+  public userStory: any;
 
   constructor(private route: ActivatedRoute, private userStoryService: UserStoryService) { }
 
@@ -20,10 +20,7 @@ export class UserStoryDetailsComponent implements OnInit {
   }
 
   getUserStory() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.userStory = this.userStoryService.get(id).subscribe(res => {
-      this.userStory = res;
-    });
+    //
   }
 
 }

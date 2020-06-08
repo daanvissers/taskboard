@@ -17,34 +17,40 @@ import {UserStoryService} from "../../../services/user-story.service";
 export class SprintDetailsComponent implements OnInit {
 
   sprint: any;
-  userStorys: any[];
+  userStorys: any;
+
+  sprintId: string;
+  projectId: string;
 
   constructor(private route: ActivatedRoute, private sprintsService: SprintsService,
               public dialog: MatDialog, private userStoryService: UserStoryService) { }
 
   ngOnInit(): void {
+    this.sprintId = this.route.snapshot.paramMap.get('sprint-id');
+    this.projectId = this.route.snapshot.paramMap.get('project-id');
+
     this.getSprint();
     this.getUserStorys();
   }
 
   getSprint() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.sprint = this.sprintsService.get(id).subscribe(res => {
-      this.sprint = res;
-    });
+    this.sprint = this.sprintsService.get(this.sprintId);
   }
 
   getUserStorys() {
-    this.sprintsService.getAll().subscribe(res => {
-      this.userStorys = res;
-    })
+    // Get all user stories that belong to this sprint
+    this.userStorys = this.userStoryService.getBySprint(this.sprintId);
   }
 
 
   openCreate() {
     this.dialog.open(UserStoryAddComponent, {
       height: '500px',
-      width: '600px'
+      width: '600px',
+      data: {
+        projectId: this.projectId,
+        sprintId: this.sprintId,
+      }
     });
   }
 }
