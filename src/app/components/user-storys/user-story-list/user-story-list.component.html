@@ -3,13 +3,13 @@
 
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4"><i>User Stories:</i> {{ project.name }}</h3>
+        <h3 class="mb-4">User Stories: <b class="text-primary">{{ sprint.title }}</b></h3>
       </div>
       <div class="col-6">
         <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
           New User Story
         </button>
-        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/archived', projectId]">Archived</button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/archived', sprintId]">Archived</button>
 
       </div>
     </div>
@@ -18,22 +18,22 @@
 
       <mat-accordion>
         <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let us of userStorys">
-          <mat-expansion-panel-header *ngIf="!us.payload.doc.data().isArchived">
+        <mat-expansion-panel *ngFor="let story of userStorys | async">
+          <mat-expansion-panel-header *ngIf="!story.isArchived">
             <mat-panel-title>
-              {{ us.payload.doc.data().title }}
+              {{ story.title }}
             </mat-panel-title>
             <mat-panel-description>
-              <span class="mr-5">Status: {{ us.payload.doc.data().status}}</span>
+              <span class="mr-5">Status: {{ story.status }}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
             <mat-panel-description>
-              <span class="mr-5">Story points: {{ us.payload.doc.data().storyPoints}}</span>
-              <span class="mr-5">Owner: {{ us.payload.doc.data().owner}}</span>
+              <span class="mr-5">Story points: {{ story.storyPoints }}</span>
+              <span class="mr-5">Owner: {{ story.owner }}</span>
             </mat-panel-description>
           <br />
           <mat-panel-description>
-            <p class="mr-2">{{ us.payload.doc.data().description }} </p>
+            <p class="mr-2">{{ story.description }} </p>
 
           </mat-panel-description>
 
@@ -41,9 +41,9 @@
           <hr>
 
 
-          <button mat-stroked-button color="basic" class="mr-2" (click)="editUserStory(us.payload.doc.id)">Edit</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="archiveUserStory(us.payload.doc.id)">Archive</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteUserStory(us.payload.doc.id)">
+          <button mat-stroked-button color="basic" class="mr-2" (click)="editUserStory(story.id)">Edit</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="archiveUserStory(story.id)">Archive</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteUserStory(story.id)">
 
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
           </button>

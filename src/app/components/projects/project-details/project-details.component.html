@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4">{{ project.name }}</h3>
+        <h3 class="mb-4 text-primary">{{ project.name }}</h3>
       </div>
       <div class="col-6">
         <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
@@ -35,7 +35,7 @@
           <!-- Extra content, like buttons -->
           <hr>
 
-
+          <button mat-stroked-button color="primary" class="mr-2" [routerLink]="['/user-stories', sprint.payload.doc.id]">User Stories</button>
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/sprints',sprint.payload.doc.data().projectId, sprint.payload.doc.id]">View</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="editSprint(sprint.payload.doc.id)">Edit</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="deleteSprint(sprint.payload.doc.id)">

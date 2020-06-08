@@ -3,6 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {UserStoryService} from "../../../services/user-story.service";
 import { ProjectsService } from 'src/app/services/projects.service';
 import {ActivatedRoute} from "@angular/router";
+import {SprintsService} from "../../../services/sprints.service";
 
 
 
@@ -14,31 +15,32 @@ import {ActivatedRoute} from "@angular/router";
 export class UserStoryArchiveComponent implements OnInit {
 
   userStorys: any;
-  project: any;
+  sprint: any;
   projectId: string;
+  sprintId: string;
 
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog, private userStorysService: UserStoryService,
-              private projectsService: ProjectsService) {
-    this.projectId = this.route.snapshot.paramMap.get('id');
+              private sprintsService: SprintsService) {
+    this.sprintId = this.route.snapshot.paramMap.get('id');
+
   }
 
   ngOnInit(): void {
-    this.getProject();
-    this.getUserStorys(this.projectId);
+    this.getSprint();
+    this.getUserStorys();
   }
 
-  getUserStorys(projectId: string){
-    this.userStorysService.getByProject(projectId).subscribe(res => {
-      this.userStorys = res;
-    })
+  getUserStorys(){
+    this.userStorys = this.userStorysService.getBySprint(this.sprintId);
+
   }
 
-  getProject() {
-    this.project = this.projectsService.get(this.projectId).subscribe(res => {
-      this.project = res;
+
+  getSprint(){
+    this.sprint = this.sprintsService.get(this.sprintId).subscribe(res => {
+      this.sprint = res;
     });
   }
-
 
 }

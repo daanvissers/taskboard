@@ -43,6 +43,12 @@ export class UserStoryService {
     ).snapshotChanges();
   }
 
+  getBySprint(id: string) {
+    return this.afStore.collection('user-storys', ref =>
+      ref.where('sprintId', '==', id))
+      .valueChanges();
+  }
+
   delete(id: string) {
     return this.afStore.collection('user-storys').doc(id).delete()
       .then(res => {
@@ -83,9 +89,5 @@ export class UserStoryService {
   }
 
 
-  getBySprint(sprintId: string) {
-    return this.afStore.collection('user-storys', ref => ref
-                        .where('sprintId', '==', sprintId))
-                        .valueChanges();
-  }
+
 }

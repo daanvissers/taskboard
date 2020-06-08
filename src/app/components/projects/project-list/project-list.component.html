@@ -75,7 +75,6 @@
           <!-- Extra content, like buttons -->
           <hr>
 
-          <button mat-stroked-button color="primary" class="mr-2" [routerLink]="['/user-stories', project.id]">User Stories</button>
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.id]">View</button>
           <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="editProject(project.id)">Edit</button>
           <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="archiveProject(project.id)">Archive</button>

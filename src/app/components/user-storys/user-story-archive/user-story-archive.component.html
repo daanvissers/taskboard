@@ -5,10 +5,10 @@
 
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4">Archived User Stories for {{ project.name }}</h3>
+        <h3 class="mb-4">Archived User Stories: <b class="text-primary"> {{ sprint.title }}</b></h3>
       </div>
       <div class="col-6">
-        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories', projectId]">Active User Stories</button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories', sprintId]">Active User Stories</button>
       </div>
     </div>
 
@@ -16,25 +16,25 @@
 
       <mat-accordion>
         <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let us of userStorys">
-          <mat-expansion-panel-header *ngIf="us.payload.doc.data().isArchived">
+        <mat-expansion-panel *ngFor="let story of userStorys | async">
+          <mat-expansion-panel-header *ngIf="story.isArchived">
             <mat-panel-title>
-              {{ us.payload.doc.data().title }}
+              {{ story.title }}
             </mat-panel-title>
             <mat-panel-description>
-              <span class="mr-5">Story points: {{ us.payload.doc.data().storyPoints}}</span>
-              <span class="mr-5">Owner: {{ us.payload.doc.data().owner}}</span>
+              <span class="mr-5">Story points: {{ story.storyPoints }}</span>
+              <span class="mr-5">Owner: {{ story.owner }}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-panel-description>
-            <p class="mr-2">{{ us.payload.doc.data().description }} </p>
+            <p class="mr-2">{{ story.description }}</p>
 
           </mat-panel-description>
 
           <!-- Extra content, like buttons -->
           <hr>
 
-          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/user-stories', us.payload.doc.id]">View</button>
+          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/user-stories', story.id]">View</button>
         </mat-expansion-panel>
 
       </mat-accordion>

@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z3 p-4" *ngIf="sprint | async as sprint">
   <div class="row">
     <div class="col-2">
-      <h3 class="mb-4">
+      <h3 class="mb-4 text-primary">
         {{ sprint.title }}
       </h3>
     </div>
@@ -12,6 +12,8 @@
       <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
         New User Story
       </button>
+      <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/', sprintId]">Manage Stories</button>
+
     </div>
   </div>
 </mat-card>

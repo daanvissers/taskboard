@@ -16,39 +16,49 @@ import {UserStoryEditComponent} from "../user-story-edit/user-story-edit.compone
 export class UserStoryListComponent implements OnInit {
 
   project: any;
+  sprint: any;
   userStorys: any;
   projectId: string;
+  sprintId: string;
 
   constructor(private route: ActivatedRoute, private projectsService: ProjectsService,
               public dialog: MatDialog, private sprintsService: SprintsService,
               private userStorysService: UserStoryService)
   {
-    this.projectId = this.route.snapshot.paramMap.get('id');
+    // this.projectId = this.route.snapshot.paramMap.get('id');
+    this.sprintId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    this.getProject();
-    this.getUserStorys(this.projectId)
+    // this.getProject();
+    this.getSprint();
+    this.getUserStorys()
   }
 
-  getProject() {
-    this.project = this.projectsService.get(this.projectId).subscribe(res => {
-      this.project = res;
+  getSprint(){
+    this.sprint = this.sprintsService.get(this.sprintId).subscribe(res => {
+      this.sprint = res;
     });
   }
+
+  // getProject() {
+  //   this.project = this.projectsService.get(this.projectId).subscribe(res => {
+  //     this.project = res;
+  //   });
+  // }
 
   openCreate() {
     this.dialog.open(UserStoryAddComponent, {
       height: '500px',
       width: '600px',
-      data: { projectId: this.projectId }
+      data: { projectId: this.projectId,
+              sprintId: this.sprintId}
     });
   }
 
-  getUserStorys(projectId: string){
-    this.userStorysService.getByProject(projectId).subscribe(res => {
-      this.userStorys = res;
-    })
+  getUserStorys(){
+    this.userStorys = this.userStorysService.getBySprint(this.sprintId);
+
   }
 
 
