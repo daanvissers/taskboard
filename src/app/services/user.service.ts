@@ -26,4 +26,12 @@ export class UserService {
     return this.afStore.collection('users').snapshotChanges();
   }
 
+  search(displayName: string) {
+    return this.afStore.collection('users', ref => ref
+                        .orderBy("displayName")
+                        .startAt(displayName)
+                        .endAt(displayName)
+    ).valueChanges();               
+  }
+
 }

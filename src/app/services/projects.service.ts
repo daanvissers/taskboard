@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { UserService } from './user.service';
 import { Project } from '../interfaces/project';
-import { User } from '../interfaces/user';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -31,7 +30,8 @@ export class ProjectsService {
   }
 
   getAll() {
-    return this.afStore.collection('projects').valueChanges();
+    return this.afStore.collection('projects')
+                        .valueChanges({ idField: 'id' });
   }
 
   get(id: string) {
@@ -93,4 +93,16 @@ export class ProjectsService {
     return members;
   }
 
+  addMember(username: string, role: string, projectId: string) {
+
+    // Get user uid
+    // const uid = "XXXX";
+    //
+    // this.afStore.collection('projects')
+    //   .doc(projectId)
+    //   .set(
+    //     { members: [{ uid: uid, role: role }] },
+    //     { merge: true }
+    //   )
+  }
 }

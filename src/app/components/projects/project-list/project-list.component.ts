@@ -6,9 +6,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { Project } from 'src/app/interfaces/project';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
-import { stringify } from 'querystring';
+import { ProjectMemberAddComponent } from '../project-member-add/project-member-add.component';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { User } from "src/app/interfaces/user";
 
 import { flatMap, filter, map, switchMap, tap, zip } from 'rxjs/operators';
 import { Observable, observable, combineLatest } from 'rxjs';
@@ -37,7 +36,7 @@ export class ProjectListComponent implements OnInit {
   openCreate() {
     this.dialog.open(ProjectAddComponent, {
       height: '360px',
-      width: '600px'
+      width: '500px'
     });
   }
 
@@ -59,6 +58,16 @@ export class ProjectListComponent implements OnInit {
 
   archiveProject(id: string) {
     this.projectsService.archive(id);
+  }
+
+  addMember(projectId: string) {
+    this.dialog.open(ProjectMemberAddComponent, {
+      width: '450px',
+      height: '400px',
+      data: {
+        id: projectId
+      }
+    })
   }
 
   openProject(project: Project) {
