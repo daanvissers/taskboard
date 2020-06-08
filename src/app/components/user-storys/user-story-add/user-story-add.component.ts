@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Sprint} from "../../../interfaces/sprint";
 import { Project } from '../../../interfaces/project';
 import {AuthenticationService} from "../../../services/authentication.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {SprintsService} from "../../../services/sprints.service";
 import {FormControl} from "@angular/forms";
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -21,13 +21,13 @@ export class UserStoryAddComponent implements OnInit {
   @Input() description: string;
   @Input() storyPoints: number;
 
-
   constructor(private route: ActivatedRoute, private authService: AuthenticationService,
               public dialog: MatDialog,
               private sprintService: SprintsService, private projectsService: ProjectsService,
-              private userStoryService: UserStoryService) { }
+              private userStoryService: UserStoryService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data.sprintId)
   }
 
   create() {
@@ -37,11 +37,10 @@ export class UserStoryAddComponent implements OnInit {
       description: this.description,
       status: "new",
       storyPoints: this.storyPoints,
-      owner: null,
+      owner: "XXXX",
       isArchived: false,
-      // TODO: Huidig sprint en project ID ophalen werkend krijgen
-      sprintId: this.route.snapshot.paramMap.get('id2'),
-      projectId: this.route.snapshot.paramMap.get('id1')
+      sprintId: this.data.sprintId,
+      projectId: this.data.projectId
     };
     // Use the service to create User Story on FireBase
     this.userStoryService.create(userStory);

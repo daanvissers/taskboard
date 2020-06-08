@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'projects/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard]},
   { path: 'projects/edit/:id', component: ProjectEditComponent, canActivate: [AuthGuard]},
 
-  { path: 'sprints/:id1/:id2', component: SprintDetailsComponent, canActivate: [AuthGuard]},
+  { path: 'sprints/:project-id/:sprint-id', component: SprintDetailsComponent, canActivate: [AuthGuard]},
 
   { path: 'user-stories/:id', component: UserStoryListComponent, canActivate: [AuthGuard]},
   { path: 'user-stories/archived/:id', component: UserStoryArchiveComponent, canActivate: [AuthGuard]}

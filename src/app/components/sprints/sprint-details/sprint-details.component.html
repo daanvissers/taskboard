@@ -1,7 +1,9 @@
-<mat-card class="mat-elevation-z3 p-4">
+<mat-card class="mat-elevation-z3 p-4" *ngIf="sprint | async as sprint">
   <div class="row">
     <div class="col-2">
-      <h3 class="mb-4">{{ sprint.title }}</h3>
+      <h3 class="mb-4">
+        {{ sprint.title }}
+      </h3>
     </div>
     <div class="col-2">
       <h3 class="mb-4">Board</h3>
@@ -25,9 +27,10 @@
 
   <mat-grid-tile id="user-story">
     <div class="card-group justify-content-center">
-<!--      <app-user-story-details *ngFor="let story of userStorys">-->
 
-<!--      </app-user-story-details>-->
+
+      <app-user-story-details *ngFor="let story of userStorys | async" [story]="story">
+      </app-user-story-details>
 
 
     </div>

@@ -83,5 +83,9 @@ export class UserStoryService {
   }
 
 
-
+  getBySprint(sprintId: string) {
+    return this.afStore.collection('user-storys', ref => ref
+                        .where('sprintId', '==', sprintId))
+                        .valueChanges();
+  }
 }
