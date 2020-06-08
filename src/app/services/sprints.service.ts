@@ -49,4 +49,29 @@ export class SprintsService {
         });
       });
   }
+
+  makeSprintsDeactivated(){
+    //TODO set all sprints where project ID equals current project ID to false
+    //TODO this way there will always be only 1 sprint active
+  }
+
+  makeActive(id: string) {
+
+    this.makeSprintsDeactivated();
+    var sprint = this.afStore.collection('sprints').doc(id);
+
+    // Set the "isArchived" field of the project
+    return sprint.update({
+      isActive: true
+    })
+      .then(function() {
+        console.log("Sprint successfully made active!");
+      })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating sprint: ", error);
+      });
+
+  }
+
 }

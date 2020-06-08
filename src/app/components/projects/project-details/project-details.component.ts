@@ -66,4 +66,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.sprintsService.delete(id);
   }
 
+  makeSprintActive(id: string) {
+    this.sprintsService.makeActive(id);
+  }
+
 }

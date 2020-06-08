@@ -16,7 +16,7 @@
 
       <mat-accordion>
         <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let sprint of sprints">
+        <mat-expansion-panel *ngFor="let sprint of sprints" [ngClass]="{'border border-primary' : sprint.payload.doc.data().isActive}">
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{ sprint.payload.doc.data().title }}
@@ -25,6 +25,7 @@
             <mat-panel-description>
               <span class="mr-5">Start Date: {{ sprint.payload.doc.data().startDate.seconds * 1000| date:'short' }}</span>
               <span class="mr-5">End Date: {{ sprint.payload.doc.data().endDate.seconds * 1000| date:'short'}}</span>
+              <span class="mr-5 text-primary" *ngIf="sprint.payload.doc.data().isActive">Active</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-panel-description>
@@ -41,6 +42,9 @@
           <button mat-stroked-button color="basic" class="mr-2" (click)="deleteSprint(sprint.payload.doc.id)">
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
           </button>
+          <button mat-stroked-button color="" class="mr-2 btn btn-primary"
+                  *ngIf="!sprint.payload.doc.data().isActive"
+                  (click)="makeSprintActive(sprint.payload.doc.id)">Make Active</button>
 
         </mat-expansion-panel>
 
