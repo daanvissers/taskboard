@@ -23,5 +23,7 @@ export class ProjectArchiveComponent implements OnInit {
     })
   }
 
-
+  recover(projectId: string) {
+    this.projectsService.archive(projectId, false);
+  }
 }

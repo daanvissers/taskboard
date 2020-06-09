@@ -9,9 +9,6 @@ import { ProjectEditComponent } from '../project-edit/project-edit.component';
 import { ProjectMemberAddComponent } from '../project-member-add/project-member-add.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { flatMap, filter, map, switchMap, tap, zip } from 'rxjs/operators';
-import { Observable, observable, combineLatest } from 'rxjs';
-
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -23,8 +20,7 @@ export class ProjectListComponent implements OnInit {
   selectedProject: any;
 
   constructor(public dialog: MatDialog, private projectsService: ProjectsService,
-              private afStore: AngularFirestore, private userService: UserService,
-              private auth: AuthenticationService) { }
+              private userService: UserService, private auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.projects = this.projectsService.getAll();
@@ -40,10 +36,6 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  getProjects() {
-    //
-  }
-
   editProject(id: string) {
     this.dialog.open(ProjectEditComponent, {
       width: '450px',
@@ -57,7 +49,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   archiveProject(id: string) {
-    this.projectsService.archive(id);
+    this.projectsService.archive(id, true);
   }
 
   addMember(projectId: string) {

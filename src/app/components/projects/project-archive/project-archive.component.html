@@ -33,6 +33,8 @@
           <hr>
 
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.id]">View</button>
+          <!-- Recover button -->
+          <button mat-stroked-button color="basic" class="mr-2" (click)="recover(project.id)">Recover</button>
         </mat-expansion-panel>
 
       </mat-accordion>

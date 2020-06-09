@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
 import { UserService } from './user.service';
 import { Project } from '../interfaces/project';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { flatMap, filter, map, switchMap, zip } from 'rxjs/operators';
-import { Observable, observable, combineLatest, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
 
-  constructor(private authService: AuthenticationService, private snackbar: MatSnackBar,
-              private afStore: AngularFirestore, private userService: UserService) { }
+  constructor(private snackbar: MatSnackBar,
+              private afStore: AngularFirestore, 
+              private userService: UserService) { }
 
   create(project: Project) {
     return new Promise<any>((resolve, reject) => {
@@ -47,20 +44,26 @@ export class ProjectsService {
     });
   }
 
-  archive(id: string) {
+  /**
+   * Archives a Project by setting the isArchived boolean.
+   *
+   * @param id - The ID of the Project to be (un)archived
+   * @param archive - whether or not it must be archived
+   */
+  archive(id: string, archive: boolean) {
 
     var project = this.afStore.collection('projects').doc(id);
 
     // Set the "isArchived" field of the project
-    return project.update({
-        isArchived: true
+    return project.update({ isArchived: archive })
+    .then(res => {
+      this.snackbar.open('Successfully ' + (archive ? 'archived' : 'recovered') + '  project!', 'Close', {
+        duration: 5000,
+      });
     })
-    .then(function() {
-        console.log("Project successfully updated!");
-    })
-    .catch(function(error) {
-        // The document probably doesn't exist.
-        console.error("Error updating project: ", error);
+    .catch(res => {
+      // The document probably doesn't exist.
+      console.error(res);
     });
 
   }
@@ -93,16 +96,8 @@ export class ProjectsService {
     return members;
   }
 
-  addMember(username: string, role: string, projectId: string) {
-
-    // Get user uid
-    // const uid = "XXXX";
-    //
-    // this.afStore.collection('projects')
-    //   .doc(projectId)
-    //   .set(
-    //     { members: [{ uid: uid, role: role }] },
-    //     { merge: true }
-    //   )
+  addMember(uid: string, selected: string, projectId: string) {
+    throw new Error("Method not implemented.");
   }
+
 }
