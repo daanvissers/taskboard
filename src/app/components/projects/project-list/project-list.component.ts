@@ -40,7 +40,7 @@ export class ProjectListComponent implements OnInit {
     this.dialog.open(ProjectEditComponent, {
       width: '450px',
       height: '400px',
-      data: { id: id },
+      data: { id: id, project: this.selectedProject },
     });
   }
 

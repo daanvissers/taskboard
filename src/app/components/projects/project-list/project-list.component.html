@@ -23,7 +23,8 @@
               {{ project.name }}
             </mat-panel-title>
             <mat-panel-description>
-              <span class="mr-5">Status: {{ project.status }}</span>
+              <!-- Status defaults to Not Started when null -->
+              <span class="mr-5">Status: {{ project.status || 'Not Started' }}</span>
             </mat-panel-description>
           </mat-expansion-panel-header>
 

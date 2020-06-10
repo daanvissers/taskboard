@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from 'src/app/services/projects.service';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-project-edit',
@@ -16,30 +15,41 @@ export class ProjectEditComponent implements OnInit {
   @Input() description: string;
   @Input() owner: string;
 
-  constructor(private projectsService: ProjectsService, public dialog: MatDialog,
+  selectedStatus: string;
+  statuses = [
+    { viewValue: 'Not Started' },
+    { viewValue: 'In Progress' },
+    { viewValue: 'Finished' }
+  ];
+
+  constructor(private projectsService: ProjectsService, 
+              private dialog: MatDialogRef<ProjectEditComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    // TODO: Load existing project values into Input fields
-    this.getProject();
+    // Pass the Project from the Material Dialog Data
+    this.project = this.data.project;
+
+    // Fill the Input fields
+    this.name = this.project.name;
+    this.description = this.project.description;
+    this.owner = this.project.owner;
+    this.selectedStatus = this.project.status;
   }
 
-  getProject() {
-    // Get the project from the id passed onto the Material Dialog
-    this.project = this.projectsService.get(this.data.id)
-    .subscribe(res => {
-      this.project = res;
-    });
-  }
+  update() {   
+    // Validation check for empty fields
+    if (this.name && this.description) {
 
-  update() {
-    const project = {
-      name: this.name,
-      description: this.description,
-      // owner: this.owner,
-    };
-    this.projectsService.update(this.data.id, project);
-    this.dialog.closeAll();
-  }
+      const project = {
+        name: this.name,
+        description: this.description,
+        // owner: this.owner,
+        status: this.selectedStatus
+      };
 
+      this.projectsService.update(this.data.id, project);
+      this.dialog.close();
+    }
+  }
 }

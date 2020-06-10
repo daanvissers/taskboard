@@ -72,8 +72,10 @@ export class ProjectsService {
   update(id: string, project: any){
     var proj = this.afStore.collection('projects').doc(id);
 
-    return proj.update(project).then(function() {
-      console.log("Project successfully updated!");
+    return proj.update(project).then(res => {
+      this.snackbar.open('Project succesfully updated!', 'Close', {
+        duration: 5000,
+      });
     })
     .catch(function(error) {
         // The document probably doesn't exist.

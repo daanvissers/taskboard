@@ -25,6 +25,16 @@
         <mat-label>Description</mat-label>
         <textarea matInput [(ngModel)]="description"></textarea>
       </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="selectedStatus">
+          <mat-option *ngFor="let status of statuses" [value]="status.viewValue">
+            {{ status.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </div>
   </div>
 
