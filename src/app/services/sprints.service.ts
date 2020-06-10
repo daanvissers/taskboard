@@ -37,7 +37,7 @@ export class SprintsService {
   // Gets a collection of Sprints by Project ID
   getByProject(id: string) {
     return this.afStore.collection('sprints', ref =>
-      ref.where('projectId', '==', id)
+      ref.orderBy('startDate', 'asc').where('projectId', '==', id)
     ).snapshotChanges();
   }
 

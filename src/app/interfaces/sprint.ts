@@ -3,5 +3,6 @@ export interface Sprint {
     description: string,
     startDate: string,
     endDate: string,
-    projectId: string
+    projectId: string,
+    isActive: boolean
 }

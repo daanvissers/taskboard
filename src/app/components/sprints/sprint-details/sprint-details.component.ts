@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {SprintsService} from "../../../services/sprints.service";
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {SprintAddComponent} from "../sprint-add/sprint-add.component";
-import {MatDialog} from "@angular/material/dialog";
-import {UserStoryAddComponent} from "../../user-storys/user-story-add/user-story-add.component";
-import {UserStoryDetailsComponent} from "../../user-storys/user-story-details/user-story-details.component";
-import {UserStoryService} from "../../../services/user-story.service";
+import { SprintsService } from "../../../services/sprints.service";
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from "@angular/material/dialog";
+import { UserStoryAddComponent } from "../../user-storys/user-story-add/user-story-add.component";
+import { UserStoryService } from "../../../services/user-story.service";
 
 
 @Component({
@@ -41,7 +39,6 @@ export class SprintDetailsComponent implements OnInit {
     // Get all user stories that belong to this sprint
     this.userStorys = this.userStoryService.getBySprint(this.sprintId);
   }
-
 
   openCreate() {
     this.dialog.open(UserStoryAddComponent, {

@@ -19,7 +19,19 @@
         <mat-expansion-panel *ngFor="let sprint of sprints">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              {{ sprint.payload.doc.data().title }}
+              <!-- Sprint is Active -->
+              <span *ngIf="sprint.payload.doc.data().isActive">
+                <mat-icon aria-hidden="false" aria-label="Sprint is active">check_circle</mat-icon>
+              </span>
+              <!-- Sprint is Inactive -->
+              <span *ngIf="!sprint.payload.doc.data().isActive">
+                <mat-icon aria-hidden="false" aria-label="Sprint is inactive">check_circle_outline</mat-icon>
+              </span>
+              <!-- Sprint title -->
+              <span class="ml-2">
+                {{ sprint.payload.doc.data().title }}
+              </span>
+              
             </mat-panel-title>
             <!-- Firebase data converted to seconds to display actual timestamp -->
             <mat-panel-description>

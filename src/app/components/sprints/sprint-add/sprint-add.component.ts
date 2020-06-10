@@ -49,7 +49,8 @@ export class SprintAddComponent implements OnInit {
       description: this.description,
       startDate: this.startDate,
       endDate: this.endDate,
-      projectId: this.data.projectId
+      projectId: this.data.projectId,
+      isActive: false,
     };
     // Use the service to create sprint on FireBase
     this.sprintService.create(sprint);
