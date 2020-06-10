@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-project-member-add',
@@ -11,36 +12,42 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ProjectMemberAddComponent implements OnInit {
 
   @Input() displayName: string;
-  projectId: string;
   selected: string;
   foundUser: any;
   uid: string;
-  disabled: boolean = false;
 
   roles = [
-    {viewValue: 'Owner'},
-    {viewValue: 'Contributor'},
-    {viewValue: 'Viewer'}
+    { viewValue: 'Owner' },
+    { viewValue: 'Contributor' },
+    { viewValue: 'Viewer' }
   ];
 
   constructor(private projectsService: ProjectsService, private userService: UserService,
-              public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) { }
+              public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.projectId = this.data.id;
+
   }
 
   searchMember(displayName: string) {
+    this.foundUser = null;
+    if(displayName)
+      this.foundUser = this.userService.search(displayName);    
+  }
 
-    if(displayName.length) {
-      this.foundUser = this.userService.search(displayName);
-      this.disabled = false;
-    }
+  addMember(uid: string) {
     
+    // If a user is found and a role has been selected...
+    if (this.foundUser && this.selected) {
+      this.projectsService.addMember(uid, this.selected, this.data.id);
+      this.dialog.closeAll();
+    }
+    // If not, tell the user
+    else {
+      this.snackbar.open('Please make sure to choose a role and a user!', 'Close', {
+        duration: 5000,
+      });
+    }
   }
-
-  addMember() {
-    this.projectsService.addMember(this.uid, this.selected, this.projectId);
-  }
-
 }

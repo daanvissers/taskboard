@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from "../interfaces/user";
 
-import { flatMap, filter, map, switchMap, zip } from 'rxjs/operators';
-import { Observable, observable, combineLatest, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class UserService {
    * Returns an Observable of type User by given ID.
    *
    * @param id - The ID of the desired User
-   * @returns An Observable of type User
+   * @returns - An Observable of type User
    */
   getUser(id: string): Observable<User> {
     return this.afStore.doc<User>('users/' + id).valueChanges();
@@ -26,12 +26,23 @@ export class UserService {
     return this.afStore.collection('users').snapshotChanges();
   }
 
-  search(displayName: string) {
-    return this.afStore.collection('users', ref => ref
-                        .orderBy("displayName")
-                        .startAt(displayName)
-                        .endAt(displayName)
-    ).valueChanges();               
+  /**
+   * Return the User belonging to the given displayName.
+   * Limit is set to 1, in case there are users with same name.
+   * 
+   * @param displayName - The displayName to search the user by
+   * @returns - Observable with Users
+   */
+  search(displayName: string): Observable<User> {
+    return this.afStore.collection<User>('users', ref => ref
+                        .where('displayName', '==', displayName)
+                        .limit(1)
+    ).valueChanges()
+    .pipe(
+      map(users => {
+        return users[0];
+      })
+    );
   }
 
 }

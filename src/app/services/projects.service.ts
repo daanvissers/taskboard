@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { Project } from '../interfaces/project';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -97,7 +98,23 @@ export class ProjectsService {
   }
 
   addMember(uid: string, selected: string, projectId: string) {
-    throw new Error("Method not implemented.");
+
+    var project = this.afStore.collection('projects').doc(projectId);
+
+    // Add member's uid and role to the member array in FireBase (as Map object).
+    // With arrayUnion() it will be added to the end of the array 
+    return project.update({
+      members: firestore.FieldValue.arrayUnion({uid: uid, role: selected})
+    })
+    .then(res => {
+      this.snackbar.open('Added member to the project!', 'Close', {
+        duration: 5000,
+      });
+    })
+    .catch(res => {
+      // Something went wrong!
+      console.error(res);
+    });
   }
 
 }
