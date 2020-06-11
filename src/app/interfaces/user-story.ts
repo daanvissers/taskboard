@@ -3,7 +3,7 @@ export interface UserStory {
     description: string,
     status: string,
     storyPoints: number,
-    owner: string,
+    assignee: string,
     sprintId: string,
     projectId: string,
     isArchived: boolean

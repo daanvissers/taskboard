@@ -86,8 +86,8 @@ export class SprintDetailsComponent implements OnInit {
 
   openCreate() {
     this.dialog.open(UserStoryAddComponent, {
-      height: '500px',
-      width: '600px',
+      height: '385px',
+      width: '450px',
       data: {
         projectId: this.projectId,
         sprintId: this.sprintId,

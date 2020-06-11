@@ -35,9 +35,9 @@ export class UserStoryAddComponent implements OnInit {
     const userStory: UserStory = {
       title: this.title,
       description: this.description,
-      status: "new",
+      status: 'To Do',
       storyPoints: this.storyPoints,
-      owner: "XXXX",
+      assignee: null,
       isArchived: false,
       sprintId: this.data.sprintId,
       projectId: this.data.projectId
