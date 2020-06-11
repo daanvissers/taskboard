@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
-import { Project } from '../interfaces/project';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {Sprint} from "../interfaces/sprint";
 import {UserStory} from "../interfaces/user-story";
-import * as firebase from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +67,7 @@ export class UserStoryService {
   }
 
 
-    update(id: string, userStory: any){
+  update(id: string, userStory: any) {
     var story = this.afStore.collection('user-storys').doc(id);
 
     return story.update(userStory).then(function() {
@@ -82,10 +79,9 @@ export class UserStoryService {
       });
   }
 
-
   getBySprint(sprintId: string) {
     return this.afStore.collection('user-storys', ref => ref
                         .where('sprintId', '==', sprintId))
-                        .valueChanges();
+                        .valueChanges({ idField: 'id' });
   }
 }
