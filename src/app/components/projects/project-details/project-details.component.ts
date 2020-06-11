@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Project } from 'src/app/interfaces/project';
+import { Sprint } from 'src/app/interfaces/sprint';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { SprintsService } from 'src/app/services/sprints.service';
 import { switchMap } from 'rxjs/operators';
@@ -62,8 +63,12 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  deleteSprint(id: string) {
+  deleteSprint(id: string) {    
     this.sprintsService.delete(id);
+  }
+
+  activateSprint(id: string) {
+    this.sprintsService.activate(id, this.projectId);
   }
 
 }

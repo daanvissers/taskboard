@@ -54,6 +54,10 @@
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
           </button>
 
+          <button mat-stroked-button color="basic" class="float-right" (click)="activateSprint(sprint.payload.doc.id)">
+            Make Active Sprint
+          </button>
+
         </mat-expansion-panel>
 
       </mat-accordion>

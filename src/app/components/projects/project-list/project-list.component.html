@@ -76,18 +76,27 @@
           <!-- Extra content, like buttons -->
           <hr>
 
-          <button mat-stroked-button color="primary" class="mr-2" [routerLink]="['/user-stories', project.id]">User Stories</button>
-          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/projects', project.id]">View</button>
-          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="editProject(project.id)">Edit</button>
-          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="archiveProject(project.id)">Archive</button>
-          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2" (click)="deleteProject(project.id)">
-            <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
+          <!-- Left side -->
+          <button mat-stroked-button color="primary" class="mr-2 float-left" [routerLink]="['/user-stories', project.id]">
+            User Stories
+          </button>
+          <button mat-stroked-button color="basic" class="mr-2 float-left" [routerLink]="['/projects', project.id]">
+            Sprints
+          </button>
+
+          <!-- Right side -->
+          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2 float-right" (click)="editProject(project.id)">
+            Edit
+          </button>
+          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2 float-right" (click)="archiveProject(project.id)">
+            Archive
+          </button>
+          <button *ngIf="selectedProject.canEdit" mat-stroked-button color="basic" class="mr-2 float-right" (click)="deleteProject(project.id)">
+            Delete
           </button>
 
         </mat-expansion-panel>
-
       </mat-accordion>
-
     </div>
   </mat-card>
 </div>
