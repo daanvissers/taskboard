@@ -6,6 +6,7 @@ import {SprintsService} from "../../../services/sprints.service";
 import {UserStoryService} from "../../../services/user-story.service";
 import {UserStoryAddComponent} from "../user-story-add/user-story-add.component";
 import {UserStoryEditComponent} from "../user-story-edit/user-story-edit.component";
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -18,10 +19,12 @@ export class UserStoryListComponent implements OnInit {
   project: any;
   userStorys: any;
   projectId: string;
+  uid: string;
 
   constructor(private route: ActivatedRoute, private projectsService: ProjectsService,
               public dialog: MatDialog, private sprintsService: SprintsService,
-              private userStorysService: UserStoryService)
+              private userStorysService: UserStoryService,
+              private auth: AuthenticationService)
   {
     this.projectId = this.route.snapshot.paramMap.get('id');
   }
@@ -31,6 +34,10 @@ export class UserStoryListComponent implements OnInit {
     this.getUserStorys(this.projectId)
   }
 
+  ngAfterInit(): void {
+    this.uid = this.auth.userData.uid;
+  }
+
   getProject() {
     this.project = this.projectsService.get(this.projectId).subscribe(res => {
       this.project = res;
@@ -38,14 +45,19 @@ export class UserStoryListComponent implements OnInit {
   }
 
   openCreate() {
-    this.dialog.open(UserStoryAddComponent, {
-      height: '500px',
-      width: '600px',
-      data: { 
-        projectId: this.projectId,
-        sprintId: null // Choose to assign Sprint later
-      }
-    });
+    if (this.isAuthorized()) {
+      this.dialog.open(UserStoryAddComponent, {
+        height: '500px',
+        width: '600px',
+        data: { 
+          projectId: this.projectId,
+          sprintId: null // Choose to assign Sprint later
+        }
+      });
+    } else {
+      alert(`You don't belong in this project!`);
+    }
+    
   }
 
   getUserStorys(projectId: string){
@@ -53,19 +65,42 @@ export class UserStoryListComponent implements OnInit {
   }
 
   editUserStory(id: string) {
-    this.dialog.open(UserStoryEditComponent, {
-      width: '450px',
-      height: '400px',
-      data: { id: id },
-    });
+    if (this.isAuthorized()) {
+      this.dialog.open(UserStoryEditComponent, {
+        width: '450px',
+        height: '400px',
+        data: { id: id },
+      });
+    } else {
+      alert(`You don't belong in this project!`);
+    }
   }
 
   deleteUserStory(id: string) {
-    this.userStorysService.delete(id);
+    if(this.isAuthorized())
+      this.userStorysService.delete(id);
+    else
+      alert(`You don't belong in this project!`);
   }
 
   archiveUserStory(id: string) {
-    this.userStorysService.archive(id, true);
+    if(this.isAuthorized())
+      this.userStorysService.archive(id, true);
+    else
+      alert(`You don't belong in this project!`);
+  }
+
+  isAuthorized(): boolean {
+    // Determine whether the currently logged in user is a member
+    let canEdit = (this.project.members
+      .map(x => x.uid)
+      .includes(this.auth.userData.uid));
+
+    // Overwrite canEdit if the logged in user is the owner
+    if (this.auth.userData.uid === this.project.owner) {
+      canEdit = true;
+    }
+    return canEdit;
   }
 
 }
