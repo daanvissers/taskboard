@@ -49,9 +49,7 @@ export class UserStoryListComponent implements OnInit {
   }
 
   getUserStorys(projectId: string){
-    this.userStorysService.getByProject(projectId).subscribe(res => {
-      this.userStorys = res;
-    })
+    this.userStorys = this.userStorysService.getByProject(projectId);
   }
 
   editUserStory(id: string) {
@@ -67,7 +65,7 @@ export class UserStoryListComponent implements OnInit {
   }
 
   archiveUserStory(id: string) {
-    this.userStorysService.archive(id);
+    this.userStorysService.archive(id, true);
   }
 
 }

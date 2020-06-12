@@ -3,6 +3,8 @@ import { AuthenticationService } from './authentication.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {UserStory} from "../interfaces/user-story";
+import { Observable } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +32,33 @@ export class UserStoryService {
   }
 
   getAll() {
-    return this.afStore.collection('user-storys').snapshotChanges();
+    return this.afStore.collection('user-storys', ref => ref
+                        .where('isArchived', '==', false))
+                        .valueChanges({idField: 'id'});
   }
 
-  // Gets a collection of User Stories by Project ID
-  getByProject(id: string) {
-    return this.afStore.collection('user-storys', ref =>
-      ref.where('projectId', '==', id)
-    ).snapshotChanges();
+  /**
+   * 
+   * @param projectId - The ID of the Project you want the Archived 
+   *                    User Stories of
+   * @returns Observable<UserStory[]> Collection of UserStories
+   */
+  getArchived(projectId: string): Observable<UserStory[]> {
+    return this.afStore.collection<UserStory>('user-storys', ref => ref
+                        .where('projectId', '==', projectId)
+                        .where('isArchived', '==', true))
+                        .valueChanges({idField: 'id'});
+  }
+
+  /**
+   * @param projectId - The ID of the Project to get the User Stories of
+   * @returns Observable<UserStory[]> Collection of UserStories
+   */
+  getByProject(projectId: string): Observable<UserStory[]> {
+    return this.afStore.collection<UserStory>('user-storys', ref => ref
+                        .where('projectId', '==', projectId)
+                        .where('isArchived', '==', false))
+                        .valueChanges({idField: 'id'});
   }
 
   delete(id: string) {
@@ -49,13 +70,18 @@ export class UserStoryService {
       });
   }
 
-  archive(id: string) {
+  /**
+   * (Un)archives a User Story based on the passed boolean.
+   * @param id The ID of the User Story that needs to be (un)archived
+   * @param isArchived Boolean to set isArchived
+   */
+  archive(id: string, isArchived: boolean) {
 
     var userStory = this.afStore.collection('user-storys').doc(id);
 
     // Set the "isArchived" field of the project
     return userStory.update({
-      isArchived: true
+      isArchived: isArchived
     })
       .then(function() {
         console.log("User Story successfully updated!");

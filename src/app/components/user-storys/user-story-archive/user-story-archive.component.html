@@ -1,44 +1,52 @@
-
-
 <div class="container">
-  <mat-card class="mat-elevation-z3 p-4">
+  <mat-card class="mat-elevation-z3 p-4 mb-4">
 
+    <!-- Header area -->
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4">Archived User Stories for {{ project.name }}</h3>
+        <h3 class="mb-1">Archived User Stories Overview</h3>
+        <p class="mt-0 mb-4 p-0">{{ project.name }}</p>
       </div>
       <div class="col-6">
-        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories', projectId]">Active User Stories</button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" 
+                [routerLink]="['/user-stories/', projectId]">
+          Active User Stories
+        </button>
       </div>
     </div>
 
-    <div style="height: 70vh;">
+    <div class="mb-1">
+        <div class="row">
+          <div class="col-md-4" *ngFor="let userStory of userStorys | async">
 
-      <mat-accordion>
-        <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let us of userStorys">
-          <mat-expansion-panel-header *ngIf="us.payload.doc.data().isArchived">
-            <mat-panel-title>
-              {{ us.payload.doc.data().title }}
-            </mat-panel-title>
-            <mat-panel-description>
-              <span class="mr-5">Story points: {{ us.payload.doc.data().storyPoints}}</span>
-              <span class="mr-5">Owner: {{ us.payload.doc.data().owner}}</span>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <mat-panel-description>
-            <p class="mr-2">{{ us.payload.doc.data().description }} </p>
+            <!-- TODO: Make loose component out of this -->
+            <mat-card class="mat-elevation-z3 mb-4">
+              <mat-card-header>
+                <mat-card-title>{{ userStory.title }}</mat-card-title>
+                <mat-card-subtitle>
+                  SP: {{ userStory.storyPoints }}
+                </mat-card-subtitle>
+              </mat-card-header>
 
-          </mat-panel-description>
+              <mat-card-content class="p-3">
+                <p>
+                  {{ userStory.description }}
+                </p>
+              </mat-card-content>
 
-          <!-- Extra content, like buttons -->
-          <hr>
+              <mat-card-actions class="p-3">
 
-          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/user-stories', us.payload.doc.id]">View</button>
-        </mat-expansion-panel>
-
-      </mat-accordion>
-
-    </div>
+                <!-- Unarchive -->
+                <button mat-icon-button 
+                matTooltip="Make this User Story active again"
+                [matTooltipPosition]="'above'"
+                class="mr-2" (click)="recover(userStory.id)">
+                  <mat-icon aria-hidden="false" aria-label="Delete button">unarchive</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
   </mat-card>
 </div>

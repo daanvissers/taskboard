@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {UserStoryService} from "../../../services/user-story.service";
+import { MatDialog } from "@angular/material/dialog";
+import { UserStoryService } from "../../../services/user-story.service";
 import { ProjectsService } from 'src/app/services/projects.service';
-import {ActivatedRoute} from "@angular/router";
-
-
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-user-story-archive',
@@ -25,13 +23,7 @@ export class UserStoryArchiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProject();
-    this.getUserStorys(this.projectId);
-  }
-
-  getUserStorys(projectId: string){
-    this.userStorysService.getByProject(projectId).subscribe(res => {
-      this.userStorys = res;
-    })
+    this.userStorys = this.userStorysService.getArchived(this.projectId);
   }
 
   getProject() {
@@ -40,5 +32,8 @@ export class UserStoryArchiveComponent implements OnInit {
     });
   }
 
-
+  recover(id: string) {
+    // isActive: False
+    this.userStorysService.archive(id, false);
+  }
 }
