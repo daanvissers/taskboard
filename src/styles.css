@@ -17,3 +17,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cursor-pointer {
   cursor: pointer;
 }
+
+.subtitle {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: darkgrey;
+  font-size: 85%;;
+}

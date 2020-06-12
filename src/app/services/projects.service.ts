@@ -4,6 +4,8 @@ import { Project } from '../interfaces/project';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase/app';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +35,7 @@ export class ProjectsService {
   }
 
   get(id: string) {
-    return this.afStore.collection('projects').doc(id).valueChanges();
+    return this.afStore.doc('projects/' + id).valueChanges();
   }
 
   delete(id: string) {
@@ -83,10 +85,12 @@ export class ProjectsService {
     });
   }
 
+  /**
+   * TODO: Document this function
+   * 
+   */
   getProjectMembers(project: Project) {
-
     let members = [];
-
     if(project.members.length) {
       project.members.forEach(member => {
           let usr = this.userService.getUser(member['user']);
@@ -95,7 +99,6 @@ export class ProjectsService {
     } else {
       console.log("The array is empty");
     }
-
     return members;
   }
 

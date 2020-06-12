@@ -1,14 +1,12 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {Sprint} from "../../../interfaces/sprint";
-import { Project } from '../../../interfaces/project';
-import {AuthenticationService} from "../../../services/authentication.service";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {SprintsService} from "../../../services/sprints.service";
-import {FormControl} from "@angular/forms";
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import {ProjectsService} from "../../../services/projects.service";
-import {UserStory} from "../../../interfaces/user-story";
-import {UserStoryService} from "../../../services/user-story.service";
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import { ProjectsService } from "../../../services/projects.service";
+import { UserStory } from "../../../interfaces/user-story";
+import { UserStoryService } from "../../../services/user-story.service";
+import { Observable, Subscription } from 'rxjs';
+import { Project } from 'src/app/interfaces/project';
+import { UserService } from 'src/app/services/user.service';
+import { findIndex } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-story-add',
@@ -21,13 +19,41 @@ export class UserStoryAddComponent implements OnInit {
   @Input() description: string;
   @Input() storyPoints: number;
 
-  constructor(private route: ActivatedRoute, private authService: AuthenticationService,
-              public dialog: MatDialog,
-              private sprintService: SprintsService, private projectsService: ProjectsService,
-              private userStoryService: UserStoryService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  currentProject: any;
+  private sub: Subscription;
+
+  // UID of the Assignee
+  selected: string;
+
+  members = [];
+
+  constructor(public dialog: MatDialog, 
+              private userService: UserService,
+              private projectService: ProjectsService,
+              private userStoryService: UserStoryService, 
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log(this.data.sprintId)
+    this.getProject();
+  }
+
+  getProject() {
+    this.sub = this.projectService.get(this.data.projectId).subscribe(project => {
+      this.currentProject = project;
+    });
+  }
+
+  getMembers() {
+    if(!this.members.length) {
+      // TODO: Fix Select Box click bug
+      this.currentProject.members.forEach(element => {
+        this.members.push(this.userService.getUser(element.uid));
+      });
+    }  
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   create() {
@@ -35,9 +61,9 @@ export class UserStoryAddComponent implements OnInit {
     const userStory: UserStory = {
       title: this.title,
       description: this.description,
-      status: 'To Do',
+      status: 'To Do', // Default
       storyPoints: this.storyPoints,
-      assignee: null,
+      assignee: this.selected, // Nullable
       isArchived: false,
       sprintId: this.data.sprintId,
       projectId: this.data.projectId

@@ -41,7 +41,10 @@ export class UserStoryListComponent implements OnInit {
     this.dialog.open(UserStoryAddComponent, {
       height: '500px',
       width: '600px',
-      data: { projectId: this.projectId }
+      data: { 
+        projectId: this.projectId,
+        sprintId: null // Choose to assign Sprint later
+      }
     });
   }
 
@@ -50,7 +53,6 @@ export class UserStoryListComponent implements OnInit {
       this.userStorys = res;
     })
   }
-
 
   editUserStory(id: string) {
     this.dialog.open(UserStoryEditComponent, {
