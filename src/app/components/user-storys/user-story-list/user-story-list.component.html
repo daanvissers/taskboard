@@ -1,57 +1,67 @@
 <div class="container">
-  <mat-card class="mat-elevation-z3 p-4">
+  <mat-card class="mat-elevation-z3 p-4 mb-4">
 
+    <!-- Header area -->
     <div class="row">
       <div class="col-6">
-        <h3 class="mb-4"><i>User Stories:</i> {{ project.name }}</h3>
+        <h3 class="mb-1">User Stories Overview</h3>
+        <p class="mt-0 mb-4 p-0">{{ project.name }}</p>
       </div>
       <div class="col-6">
         <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
           New User Story
         </button>
         <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/archived', projectId]">Archived</button>
-
       </div>
     </div>
 
-    <div style="height: 70vh;">
+    <div class="mb-1">
+        <div class="row">
+          <div class="col-md-4" *ngFor="let userStory of userStorys">
 
-      <mat-accordion>
-        <!-- *ngFor loop -->
-        <mat-expansion-panel *ngFor="let us of userStorys">
-          <mat-expansion-panel-header *ngIf="!us.payload.doc.data().isArchived">
-            <mat-panel-title>
-              {{ us.payload.doc.data().title }}
-            </mat-panel-title>
-            <mat-panel-description>
-              <span class="mr-5">Status: {{ us.payload.doc.data().status}}</span>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-            <mat-panel-description>
-              <span class="mr-5">Story points: {{ us.payload.doc.data().storyPoints}}</span>
-              <span class="mr-5">Owner: {{ us.payload.doc.data().owner}}</span>
-            </mat-panel-description>
-          <br />
-          <mat-panel-description>
-            <p class="mr-2">{{ us.payload.doc.data().description }} </p>
+            <!-- TODO: Make loose component out of this -->
+            <mat-card class="mat-elevation-z3 mb-4">
+              <mat-card-header>
+                <mat-card-title>{{ userStory.payload.doc.data().title }}</mat-card-title>
+                <mat-card-subtitle>
+                  SP: {{ userStory.payload.doc.data().storyPoints }}
+                </mat-card-subtitle>
+              </mat-card-header>
 
-          </mat-panel-description>
+              <mat-card-content class="p-3">
+                <p>
+                  {{ userStory.payload.doc.data().description }}
+                </p>
+              </mat-card-content>
 
-          <!-- Extra content, like buttons -->
-          <hr>
+              <mat-card-actions class="p-3">
+                <!-- Edit -->
+                <button mat-icon-button 
+                matTooltip="Edit"
+                [matTooltipPosition]="'above'"
+                class="mr-2" (click)="editUserStory(userStory.payload.doc.id)">
+                  <mat-icon aria-hidden="false" aria-label="Delete button">edit</mat-icon>
+                </button>
 
+                <!-- Archive -->
+                <button mat-icon-button 
+                matTooltip="Archive"
+                [matTooltipPosition]="'above'"
+                class="mr-2" (click)="archiveUserStory(userStory.payload.doc.id)">
+                  <mat-icon aria-hidden="false" aria-label="Delete button">archive</mat-icon>
+                </button>
 
-          <button mat-stroked-button color="basic" class="mr-2" (click)="editUserStory(us.payload.doc.id)">Edit</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="archiveUserStory(us.payload.doc.id)">Archive</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="deleteUserStory(us.payload.doc.id)">
-
-            <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
-          </button>
-
-        </mat-expansion-panel>
-
-      </mat-accordion>
-
-    </div>
+                <!-- Delete -->
+                <button mat-icon-button 
+                matTooltip="Delete"
+                [matTooltipPosition]="'above'"
+                class="mr-2" (click)="deleteUserStory(userStory.payload.doc.id)">
+                  <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
   </mat-card>
 </div>
