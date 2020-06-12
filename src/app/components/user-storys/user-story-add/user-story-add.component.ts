@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Project } from 'src/app/interfaces/project';
 import { UserService } from 'src/app/services/user.service';
 import { findIndex } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-story-add',
@@ -30,7 +31,8 @@ export class UserStoryAddComponent implements OnInit {
   constructor(public dialog: MatDialog, 
               private userService: UserService,
               private projectService: ProjectsService,
-              private userStoryService: UserStoryService, 
+              private userStoryService: UserStoryService,
+              private snackbar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -57,20 +59,27 @@ export class UserStoryAddComponent implements OnInit {
   }
 
   create() {
-    // Create new User Story object
-    const userStory: UserStory = {
-      title: this.title,
-      description: this.description,
-      status: 'To Do', // Default
-      storyPoints: this.storyPoints,
-      assignee: this.selected, // Nullable
-      isArchived: false,
-      sprintId: this.data.sprintId,
-      projectId: this.data.projectId
-    };
-    // Use the service to create User Story on FireBase
-    this.userStoryService.create(userStory);
-    this.dialog.closeAll();
+    if(this.title && this.storyPoints) {
+
+      // Create new User Story object
+      const userStory: UserStory = {
+        title: this.title,
+        description: (this.description)? this.description : '', // Nullable
+        status: 'To Do', // Default
+        storyPoints: (this.storyPoints)? this.storyPoints : 0,
+        assignee: (this.selected)? this.selected : null, // Nullable
+        isArchived: false,
+        sprintId: this.data.sprintId,
+        projectId: this.data.projectId
+      };
+      // Use the service to create User Story on FireBase
+      this.userStoryService.create(userStory);
+      this.dialog.closeAll();
+    } else {
+      this.snackbar.open(`Please set a title and SP amount!`, `Close`, {
+        duration: 10000
+      })
+    }
   }
 
 }
