@@ -1,0 +1,23 @@
+.sprint-list {
+    height: 35vh;
+    overflow: auto;
+}
+
+.userstories-burndown {
+    height: 35vh;
+    overflow: auto;
+}
+
+.userstories-card {
+    height: 30vh;
+    overflow: auto;
+}
+
+.subtitle {
+    color: darkgrey;
+    margin-left: 10px;
+}
+
+.formfield {
+    width: 70%;
+}

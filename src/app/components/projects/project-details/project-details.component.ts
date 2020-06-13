@@ -10,6 +10,8 @@ import { ProjectAddComponent } from '../project-add/project-add.component';
 import { SprintEditComponent } from '../../sprints/sprint-edit/sprint-edit.component';
 import { stringify } from 'querystring';
 import { SprintAddComponent } from "../../sprints/sprint-add/sprint-add.component";
+import { UserStoryService } from 'src/app/services/user-story.service';
+import {MatSelectModule, MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-project-details',
@@ -21,11 +23,15 @@ export class ProjectDetailsComponent implements OnInit {
   project: any;
   projects: any;
   sprints: any;
+  selectedSprint = [];
+
+  unassignedUserStories: any;
 
   projectId: string;
 
   constructor(private route: ActivatedRoute, private projectsService: ProjectsService,
-              public dialog: MatDialog, private sprintsService: SprintsService)
+              public dialog: MatDialog, private sprintsService: SprintsService,
+              private userStoryService: UserStoryService)
   {
       this.projectId = this.route.snapshot.paramMap.get('id');
   }
@@ -33,6 +39,7 @@ export class ProjectDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getProject();
     this.getSprints(this.projectId);
+    this.getUnassigned(this.projectId);
   }
 
   getProject() {
@@ -53,6 +60,23 @@ export class ProjectDetailsComponent implements OnInit {
     this.sprintsService.getByProject(projectId).subscribe(res => {
       this.sprints = res;
     })
+  }
+
+  getUnassigned(projectId: string) {
+    this.unassignedUserStories = this.userStoryService.getUnassignedByProject(this.projectId);
+  }
+
+  selectSprint(event: MatSelectChange) {    
+    this.selectedSprint[event.source.id] = event.value;
+  }
+
+  assignToSprint(storyId: string) {
+    // Grab the Sprint ID from the selectedSprint Array
+    const selectedSprintId = this.selectedSprint[storyId];
+    
+    // Update UserStory SprintId-field with the Sprint ID
+    let field: object = {sprintId: selectedSprintId};
+    this.userStoryService.updateField(storyId, field);
   }
 
   editSprint(id: string) {

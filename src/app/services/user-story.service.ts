@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {UserStory} from "../interfaces/user-story";
+import { UserStory } from "../interfaces/user-story";
 import { Observable } from 'rxjs';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +26,8 @@ export class UserStoryService {
     });
   }
 
-  get(id: string) {
-    return this.afStore.collection('user-storys').doc(id).valueChanges();
+  get(id: string): Observable<UserStory> {
+    return this.afStore.doc<UserStory>('user-storys/' + id).valueChanges();
   }
 
   getAll() {
@@ -39,8 +38,7 @@ export class UserStoryService {
 
   /**
    * 
-   * @param projectId - The ID of the Project you want the Archived 
-   *                    User Stories of
+   * @param projectId - The ID of the Project you want the Archived User Stories of
    * @returns Observable<UserStory[]> Collection of UserStories
    */
   getArchived(projectId: string): Observable<UserStory[]> {
@@ -61,6 +59,22 @@ export class UserStoryService {
                         .valueChanges({idField: 'id'});
   }
 
+  /**
+   * Returns all UserStories that haven't been assigned to a Sprint
+   * @param projectId The Project's ID to get the unassigned UserStories of
+   * @returns Observable<UserStory[]> Collection of unassigned UserStories
+   */
+  getUnassignedByProject(projectId: string): Observable<UserStory[]> {
+    return this.afStore.collection<UserStory>('user-storys', ref => ref
+                        .where('projectId', '==', projectId)
+                        .where('sprintId', '==', null))
+                        .valueChanges({idField: 'id'});
+  }
+
+  /**
+   * Deletes a given UserStory.
+   * @param id - The ID of the UserStory that needs to be deleted
+   */
   delete(id: string) {
     return this.afStore.collection('user-storys').doc(id).delete()
       .then(res => {
@@ -99,10 +113,24 @@ export class UserStoryService {
     return story.update(userStory).then(function() {
       console.log("User Story successfully updated!");
     })
-      .catch(function(error) {
-        // The document probably doesn't exist.
-        console.error("Error updating User Story: ", error);
-      });
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating User Story: ", error);
+    });
+  }
+
+  /**
+   * Takes a regular object and updates the UserStory
+   * Example field object: {name: 'Daan Vissers'}
+   * @param id - The ID of the UserStory to update
+   * @param field - The field to update, of type 'object'
+   */
+  updateField(id: string, field: object) {
+    this.afStore.collection('user-storys').doc(id)
+                .update(field)
+                .then(res => { this.snackbar
+                  .open('User Story successfully updated!', 'Close', { duration: 5000 }) })
+                .catch(error => { console.error('Error updating the field'); });
   }
 
   getBySprint(sprintId: string) {
