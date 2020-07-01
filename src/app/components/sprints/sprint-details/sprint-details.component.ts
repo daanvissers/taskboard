@@ -6,6 +6,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { UserStoryAddComponent } from "../../user-storys/user-story-add/user-story-add.component";
 import { UserStoryService } from "../../../services/user-story.service";
 import { map, filter } from 'rxjs/operators';
+import { Sprint } from 'src/app/interfaces/sprint';
+import { BurndownChartComponent } from '../../burndown-chart/burndown-chart.component';
 
 @Component({
   selector: 'app-sprint-details',
@@ -62,7 +64,15 @@ export class SprintDetailsComponent implements OnInit {
       
       // Update the User Story with the new Status
       let story = event.item.data;
-      story.status = status;      
+      story.status = status;
+      
+      // Set timestamp when it was done
+      if(story.status === 'Done') {
+        story.doneAt = Date.now();
+      } else {
+        // When it gets removed from Done status, wipe DoneAt timestamp
+        story.doneAt = null;
+      }
       
       // Let the UserStoryService handle the update in the background
       this.userStoryService.update(story.id, story);
@@ -91,6 +101,17 @@ export class SprintDetailsComponent implements OnInit {
       data: {
         projectId: this.projectId,
         sprintId: this.sprintId,
+      }
+    });
+  }
+
+  openBurndown(sprint: Sprint) {
+    this.dialog.open(BurndownChartComponent, {
+      height: '500px',
+      width: '800px',
+      data: {
+        sprint: sprint,
+        sprintId: this.sprintId
       }
     });
   }

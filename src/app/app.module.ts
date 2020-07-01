@@ -30,6 +30,8 @@ import { ProjectMemberAddComponent } from './components/projects/project-member-
 import { UserStoryListComponent } from './components/user-storys/user-story-list/user-story-list.component';
 import { UserStoryEditComponent } from './components/user-storys/user-story-edit/user-story-edit.component';
 import { UserStoryArchiveComponent } from './components/user-storys/user-story-archive/user-story-archive.component';
+import { BurndownChartComponent } from './components/burndown-chart/burndown-chart.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { UserStoryArchiveComponent } from './components/user-storys/user-story-a
     ProjectMemberAddComponent,
     UserStoryListComponent,
     UserStoryEditComponent,
-    UserStoryArchiveComponent
+    UserStoryArchiveComponent,
+    BurndownChartComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { UserStoryArchiveComponent } from './components/user-storys/user-story-a
     AngularFireAuthModule,
     AngularFirestoreModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleChartsModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

@@ -70,7 +70,8 @@ export class UserStoryAddComponent implements OnInit {
         assignee: (this.selected)? this.selected : null, // Nullable
         isArchived: false,
         sprintId: this.data.sprintId,
-        projectId: this.data.projectId
+        projectId: this.data.projectId,
+        doneAt: null
       };
       // Use the service to create User Story on FireBase
       this.userStoryService.create(userStory);

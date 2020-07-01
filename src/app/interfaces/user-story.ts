@@ -6,5 +6,6 @@ export interface UserStory {
     assignee: string,
     sprintId: string,
     projectId: string,
-    isArchived: boolean
+    isArchived: boolean,
+    doneAt: number
 }
