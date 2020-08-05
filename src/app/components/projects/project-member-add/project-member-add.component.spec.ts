@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectMemberAddComponent } from './project-member-add.component';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
+import { firebaseConfig } from '../../../../environments/environment';
 
 describe('ProjectMemberAddComponent', () => {
   let component: ProjectMemberAddComponent;
@@ -8,7 +15,17 @@ describe('ProjectMemberAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectMemberAddComponent ]
+      declarations: [ ProjectMemberAddComponent ],
+      imports: [  MatSnackBarModule,
+                  MatDialogModule,
+                  AngularFireModule.initializeApp(firebaseConfig),
+                  AngularFireAuthModule,
+                  AngularFirestoreModule, 
+                ],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+      ]
     })
     .compileComponents();
   }));

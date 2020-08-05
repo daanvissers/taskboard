@@ -9,8 +9,5 @@ describe('UserStoryService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(UserStoryService);
   });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  
 });
