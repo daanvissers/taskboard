@@ -24,7 +24,7 @@ export class ProjectListComponent implements OnInit {
 
   ngOnInit(): void {
     this.projects = this.projectsService.getAll();
-
+    
     // Promise gets fulfilled when user selects a Project
     this.selectedProject = new Promise<Project>(null);
   }

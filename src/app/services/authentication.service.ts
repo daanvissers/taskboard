@@ -12,9 +12,17 @@ export class AuthenticationService {
 
   /* Logged in User to use throughout application */
   userData: User;
+  localUser: User;
 
   constructor(public afStore: AngularFirestore, public afAuth: AngularFireAuth,
-              public router: Router) {
+              public router: Router) 
+  {
+
+    /* Set local user variable if a user */
+    if(localStorage.getItem('user') !== null) {
+      this.localUser = JSON.parse(localStorage.getItem('user'));
+    }
+
     /*  Save user in Local Store when user logs in, and set to null
         when user logs out.
      */
@@ -59,6 +67,7 @@ export class AuthenticationService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified
     };
+
     return userRef.set(userData, {
       merge: true
     });

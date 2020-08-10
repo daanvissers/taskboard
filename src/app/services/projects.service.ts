@@ -4,8 +4,7 @@ import { Project } from '../interfaces/project';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase/app';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +13,14 @@ export class ProjectsService {
 
   constructor(private snackbar: MatSnackBar,
               private afStore: AngularFirestore, 
-              private userService: UserService) { }
+              private userService: UserService,
+              private authenticationService: AuthenticationService) { }
 
   create(project: Project) {
+
+    // Add the owner as a project member
+    project.members = [{role: 'Owner', uid: project.owner}];
+
     return new Promise<any>((resolve, reject) => {
       this.afStore.collection('projects')
         .add(project)
@@ -30,7 +34,17 @@ export class ProjectsService {
   }
 
   getAll() {
-    return this.afStore.collection('projects')
+    const userId = this.authenticationService.localUser.uid;
+
+    // Create role variables for the 
+    // limited Firestore array-contains-any query
+    const contributor = { role: 'Contributor', uid: userId };
+    const viewer = { role: 'Viewer', uid: userId };
+    const owner = { role: 'Owner', uid: userId };
+
+    return this.afStore.collection('projects', ref => ref
+                        .where('members', 'array-contains-any',
+                        [contributor, viewer, owner]))
                         .valueChanges({ idField: 'id' });
   }
 
