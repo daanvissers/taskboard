@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3>Edit <span *ngIf="member | async as user">{{ user.displayName }}</span></h3>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-6">
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select [(ngModel)]="selected">
+                    <mat-option *ngFor="let role of roles" [value]="role.viewValue">
+                    {{ role.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-6">
+            <span>Current role: {{ oldrole }}</span>
+        </div>
+    </div>
+
+    <div class="mt-4"></div>
+
+    <div class="row mt-4">
+        <div class="col-6">
+            <button class="float-left mr-2" mat-stroked-button color="basic" (click)="removeMember()">
+                Remove from Project
+            </button>
+        </div>
+        <div class="col-6">
+            <button class="float-right mr-2" mat-flat-button color="primary" (click)="save()">
+                Save
+            </button>
+        </div>
+    </div>
+  </div>

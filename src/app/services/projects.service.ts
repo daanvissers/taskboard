@@ -118,6 +118,7 @@ export class ProjectsService {
 
   addMember(uid: string, selected: string, projectId: string) {
 
+    // TODO: Check if member is already in project
     var project = this.afStore.collection('projects').doc(projectId);
 
     // Add member's uid and role to the member array in FireBase (as Map object).
@@ -136,4 +137,29 @@ export class ProjectsService {
     });
   }
 
+  editMember(uid: string, projectId: string, role: string, oldrole: string) {
+    
+    // Get the project
+    const project = this.afStore.collection('projects').doc(projectId);
+
+    console.log(uid + ' ' + oldrole);
+
+    // Remove the old role
+    project.update({
+      members: firestore.FieldValue.arrayRemove({uid: uid, role: oldrole})
+    });
+
+    // Insert the new role
+    project.update({
+      members: firestore.FieldValue.arrayUnion({uid: uid, role: role})
+    })
+    .then(res => {
+      this.snackbar.open(
+        'The role ' + oldrole + ' was successfully changed to ' + role + '!', 
+        'Close', {
+        duration: 5000,
+      });
+    });
+
+  }
 }

@@ -54,11 +54,13 @@
                     <mat-chip-list>
                       <!-- Chip for every member -->
                       <mat-chip *ngFor="let member of selectedProject.members">
-                        <span *ngIf="member.user | async as user">
-                          {{ user['displayName'] }}:
-                        </span>
-                        <span class="ml-1">
-                          {{ member.role }}
+                        <span *ngIf="member.user | async as user" (click)="editMember(member['uid'], member['role'])">
+                          <span>
+                            {{ user['displayName'] }}:
+                          </span>
+                          <span class="ml-1">
+                            {{ member.role }}
+                          </span>
                         </span>
                       </mat-chip>
 

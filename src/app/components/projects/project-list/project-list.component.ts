@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Project } from 'src/app/interfaces/project';
 import { ProjectEditComponent } from '../project-edit/project-edit.component';
 import { ProjectMemberAddComponent } from '../project-member-add/project-member-add.component';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { ProjectMemberEditComponent } from '../project-member-edit/project-member-edit.component';
 
 @Component({
   selector: 'app-project-list',
@@ -59,7 +59,20 @@ export class ProjectListComponent implements OnInit {
       data: {
         id: projectId
       }
-    })
+    });
+  }
+
+  editMember(memberId: string, oldrole: string) {
+    console.log(memberId);
+    this.dialog.open(ProjectMemberEditComponent, {
+      width: '450px',
+      height: '250px',
+      data: { 
+        id: memberId,
+        projectId: this.selectedProject.id,
+        oldrole: oldrole
+      }
+    });
   }
 
   openProject(project: Project) {

@@ -32,6 +32,7 @@ import { UserStoryEditComponent } from './components/user-storys/user-story-edit
 import { UserStoryArchiveComponent } from './components/user-storys/user-story-archive/user-story-archive.component';
 import { BurndownChartComponent } from './components/burndown-chart/burndown-chart.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { ProjectMemberEditComponent } from './components/projects/project-member-edit/project-member-edit.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
     UserStoryListComponent,
     UserStoryEditComponent,
     UserStoryArchiveComponent,
-    BurndownChartComponent
+    BurndownChartComponent,
+    ProjectMemberEditComponent
   ],
   imports: [
     BrowserModule,

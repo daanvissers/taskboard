@@ -37,7 +37,6 @@ export class ProjectMemberAddComponent implements OnInit {
   }
 
   addMember(uid: string) {
-    
     // If a user is found and a role has been selected...
     if (this.foundUser && this.selected) {
       this.projectsService.addMember(uid, this.selected, this.data.id);
