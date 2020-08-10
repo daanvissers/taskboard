@@ -162,4 +162,21 @@ export class ProjectsService {
     });
 
   }
+
+  removeMember(uid: string, projectId: string, role: string) {
+    // Get the project
+    const project = this.afStore.collection('projects').doc(projectId);
+
+    // Remove the member
+    project.update({
+      members: firestore.FieldValue.arrayRemove({uid: uid, role: role})
+    })
+    .then(res => {
+      this.snackbar.open(
+        'The member has been removed from the project!', 
+        'Close', {
+        duration: 5000,
+      });
+    });
+  }
 }

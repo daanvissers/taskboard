@@ -40,7 +40,8 @@ export class ProjectMemberEditComponent implements OnInit {
   }
 
   removeMember() {
-    // 
+    this.dialog.closeAll();
+    this.projectsService.removeMember(this.data.id, this.data.projectId, this.oldrole);
   }
 
 }
