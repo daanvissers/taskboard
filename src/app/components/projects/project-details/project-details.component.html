@@ -48,7 +48,7 @@
 
 
           <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/sprints',sprint.payload.doc.data().projectId, sprint.payload.doc.id]">View</button>
-          <button mat-stroked-button color="basic" class="mr-2" (click)="editSprint(sprint.payload.doc.id)">Edit</button>
+          <button mat-stroked-button color="basic" class="mr-2" (click)="editSprint(sprint.payload.doc.data(), sprint.payload.doc.id)">Edit</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="deleteSprint(sprint.payload.doc.id)">
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
           </button>

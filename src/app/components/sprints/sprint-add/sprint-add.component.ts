@@ -23,13 +23,12 @@ export class SprintAddComponent implements OnInit {
   @Input() endDate: any;
 
   project: any;
-  todayDate:Date = new Date();
+  todayDate: Date = new Date();
 
   constructor(private route: ActivatedRoute, private authService: AuthenticationService, public dialog: MatDialog,
               private sprintService: SprintsService, private projectsService: ProjectsService,
               @Inject(MAT_DIALOG_DATA) public data: any)
-  {
-  }
+  { }
 
   ngOnInit() {
     this.getProject();

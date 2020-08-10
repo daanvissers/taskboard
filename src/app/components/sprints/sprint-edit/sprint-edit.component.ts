@@ -1,5 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { Sprint } from 'src/app/interfaces/sprint';
+import { SprintsService } from 'src/app/services/sprints.service';
+import { FormControl } from '@angular/forms';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-sprint-edit',
@@ -8,17 +13,41 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class SprintEditComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  sprint: any;
+  todayDate: Date = new Date();
+  
+  @Input() title: string;
+  @Input() description: string;
+  @Input() startDate: any;
+  @Input() endDate: any;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              public dialog: MatDialog,
+              private sprintService: SprintsService) 
+  {
+    this.startDate = this.data.sprint.startDate.toDate();
+    this.endDate = this.data.sprint.endDate.toDate();
+  }
 
   ngOnInit(): void {
+    this.sprint = this.data.sprint;
+    this.title = this.sprint.title;
+    this.description = this.sprint.description;
   }
 
   edit() {
-    // TODO: Maak hier een functie die de SprintService aanroept,
-    // en de properties van een bepaalde Sprint update.
-    // Precies net zoals de Project Edit.
-    // Je kan `this.data.id` gebruiken, wat de id is van de
-    // sprint die je aan het editen bent
+    const sprint: Sprint = {
+      title: this.title,
+      description: this.description,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      projectId: this.sprint.projectId,
+      isActive: this.sprint.isActive,
+    };
+    console.log(this.sprint);
+    // Use the service to create sprint on FireBase
+    this.sprintService.update(this.data.sprintId, sprint);
+    this.dialog.closeAll();
   }
 
 }

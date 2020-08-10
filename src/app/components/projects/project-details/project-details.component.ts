@@ -79,11 +79,14 @@ export class ProjectDetailsComponent implements OnInit {
     this.userStoryService.updateField(storyId, field);
   }
 
-  editSprint(id: string) {
+  editSprint(sprint: any, sprintId: string) {
     this.dialog.open(SprintEditComponent, {
       width: '450px',
-      height: '400px',
-      data: { id: id },
+      height: '500px',
+      data: { 
+        sprint: sprint,
+        sprintId: sprintId 
+      },
     });
   }
 
