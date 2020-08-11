@@ -3,6 +3,10 @@ mat-grid-tile {
   border-left: 3px solid #ffffff;
 }
 
+.full-height {
+  height: 70vh;
+}
+
 #user-story{
   background: #ffffff;
 }

@@ -7,6 +7,8 @@ import {UserStoryService} from "../../../services/user-story.service";
 import {UserStoryAddComponent} from "../user-story-add/user-story-add.component";
 import {UserStoryEditComponent} from "../user-story-edit/user-story-edit.component";
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserStoryAssignComponent } from '../user-story-assign/user-story-assign.component';
+import { UserStory } from 'src/app/interfaces/user-story';
 
 
 @Component({
@@ -88,6 +90,18 @@ export class UserStoryListComponent implements OnInit {
       this.userStorysService.archive(id, true);
     else
       alert(`You don't belong in this project!`);
+  }
+
+  assignSprint(userStory: UserStory) {
+    if (this.isAuthorized()) {
+      this.dialog.open(UserStoryAssignComponent, {
+        width: '450px',
+        height: '250px',
+        data: { userStory: userStory },
+      });
+    } else {
+      alert(`You don't belong in this project!`);
+    }
   }
 
   isAuthorized(): boolean {

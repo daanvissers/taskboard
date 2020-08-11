@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card class="mat-elevation-z3 p-4">
+  <mat-card class="mat-elevation-z3 p-4 full-height">
 
     <div class="row">
       <div class="col-6">
@@ -61,48 +61,6 @@
 
       </mat-accordion>
 
-    </div>
-
-    <hr>
-
-    <div class="row userstories-burndown">
-      <!-- Unassigned User Stories -->
-      <div class="col-6">
-        <h5 class="mb-4">Unassigned User Story's</h5>
-        <mat-card class="mat-elevation-z3 userstories-card">
-          <div class="row mat-elevation-z1 m-1 mb-3 p-2" *ngFor="let story of unassignedUserStories | async">
-            
-            <div class="col-6">
-              <p>
-                <span>{{ story.title }}</span>
-                <span class="subtitle">({{ story.storyPoints }} SP)</span>
-              </p>
-            </div>
-
-            <div class="col-6">              
-              <mat-form-field class="formfield mr-2">
-                <mat-label>Sprint</mat-label>
-
-                <!-- When a selection is made, pass the chosen Sprint via $event 
-                    and, pass this User Story's ID as well via the [id] -->
-                <mat-select (selectionChange)="selectSprint($event)" [id]="story.id">
-                  <mat-option *ngFor="let sprint of sprints" [value]="sprint.payload.doc.id">
-                    {{ sprint.payload.doc.data().title }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <button mat-stroked-button color="basic" mat-icon-button 
-              matTooltip="Attach this User Story to Sprint"
-              [matTooltipPosition]="'above'"
-              (click)="assignToSprint(story.id)">
-                  <!-- assignToSprint looks in the selectedSprint[] array to decide 
-                        what Sprint was chosen in the select box -->
-                  <mat-icon aria-hidden="false">attach_file</mat-icon>
-              </button>
-            </div>
-          </div>
-        </mat-card>
-      </div>
     </div>
   </mat-card>
 </div>

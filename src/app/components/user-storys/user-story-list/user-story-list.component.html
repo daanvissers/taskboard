@@ -24,7 +24,7 @@
               <mat-card-header>
                 <mat-card-title>{{ userStory.title }}</mat-card-title>
                 <mat-card-subtitle>
-                  SP: {{ userStory.storyPoints }}
+                  SP: {{ userStory.storyPoints }} | {{ userStory.sprintId ? 'Assigned' : 'Unassigned' }}
                 </mat-card-subtitle>
               </mat-card-header>
 
@@ -35,6 +35,7 @@
               </mat-card-content>
 
               <mat-card-actions class="p-3">
+                <hr> 
                 <!-- Edit -->
                 <button mat-icon-button 
                 matTooltip="Edit"
@@ -57,6 +58,11 @@
                 [matTooltipPosition]="'above'"
                 class="mr-2" (click)="deleteUserStory(userStory.id)">
                   <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>
+                </button>
+
+                <button mat-stroked-button
+                class="mr-2" (click)="assignSprint(userStory)">
+                {{ userStory.sprintId ? 'Change' : 'Assign' }} Sprint
                 </button>
               </mat-card-actions>
             </mat-card>

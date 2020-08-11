@@ -1,16 +1,5 @@
-.sprint-list {
-    height: 35vh;
-    overflow: auto;
-}
-
-.userstories-burndown {
-    height: 35vh;
-    overflow: auto;
-}
-
-.userstories-card {
-    height: 30vh;
-    overflow: auto;
+.full-height {
+    height: 70vh;
 }
 
 .subtitle {
