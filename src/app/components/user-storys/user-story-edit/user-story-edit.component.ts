@@ -1,7 +1,11 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {ProjectsService} from "../../../services/projects.service";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {UserStoryService} from "../../../services/user-story.service";
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ProjectsService } from "../../../services/projects.service";
+import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import { UserStoryService } from "../../../services/user-story.service";
+import { UserStory } from 'src/app/interfaces/user-story';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/interfaces/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-story-edit',
@@ -11,46 +15,47 @@ import {UserStoryService} from "../../../services/user-story.service";
 export class UserStoryEditComponent implements OnInit {
 
   project: any;
-  userStory: any;
+  userStory: UserStory;
+  members = [];
 
   @Input() title: string;
   @Input() description: string;
-  @Input() owner: string;
+  @Input() assignee: string;
   @Input() storyPoints: number;
 
 
-  constructor(private projectsService: ProjectsService, private userStoryService: UserStoryService,
+  constructor(private projectsService: ProjectsService, 
+              private userStoryService: UserStoryService,
+              private userService: UserService,
               public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    // TODO: Load existing project values into Input fields
-    this.getUserStory();
+    this.userStory = this.data.userStory;
+    this.title = this.userStory.title;
+    this.description = this.userStory.description;
+    this.storyPoints = this.userStory.storyPoints;
+    
+    this.project = this.data.project;
   }
-  //
-  // getProject() {
-  //   // Get the project from the id passed onto the Material Dialog
-  //   this.project = this.projectsService.get(this.data.id)
-  //     .subscribe(res => {
-  //       this.project = res;
-  //     });
-  // }
-  //
-  getUserStory(){
-    // Get the user story from the id passed onto the Material Dialog
-    this.userStory = this.userStoryService.get(this.data.id)
-      .subscribe(res => {
-        this.userStory = res;
+
+  getMembers() {
+    if(!this.members.length) {
+      // TODO: Fix Select Box click bug
+      this.project.members.forEach(element => {
+        this.members.push(this.userService.getUser(element.uid));
       });
+    }  
   }
 
   update() {
     const userStory = {
       title: this.title,
       description: this.description,
-      storyPoints: this.storyPoints
-      // owner: this.owner,
+      storyPoints: this.storyPoints,
+      assignee: this.assignee
     };
+    
     this.userStoryService.update(this.data.id, userStory);
     this.dialog.closeAll();
   }

@@ -110,9 +110,8 @@ export class UserStoryService {
   update(id: string, userStory: any) {
     var story = this.afStore.collection('user-storys').doc(id);
 
-    return story.update(userStory).then(function() {
-      console.log("User Story successfully updated!");
-    })
+    return story.update(userStory).then(res => { this.snackbar
+      .open('User Story successfully updated!', 'Close', { duration: 5000 }) })
     .catch(function(error) {
       // The document probably doesn't exist.
       console.error("Error updating User Story: ", error);

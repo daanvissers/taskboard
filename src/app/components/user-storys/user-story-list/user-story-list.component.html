@@ -11,6 +11,9 @@
         <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
           New User Story
         </button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/projects/', projectId]">
+          View Sprints
+        </button>
         <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/archived', projectId]">Archived</button>
       </div>
     </div>
@@ -24,7 +27,9 @@
               <mat-card-header>
                 <mat-card-title>{{ userStory.title }}</mat-card-title>
                 <mat-card-subtitle>
-                  SP: {{ userStory.storyPoints }} | {{ userStory.sprintId ? 'Assigned' : 'Unassigned' }}
+                  SP: {{ userStory.storyPoints }} 
+                  | {{ userStory.sprintId ? '✔ Sprint' : '✖ Sprint' }} 
+                  | {{ userStory.assignee ? '✔ Assignee' : '✖ Assignee' }}
                 </mat-card-subtitle>
               </mat-card-header>
 
@@ -40,12 +45,12 @@
                 <button mat-icon-button 
                 matTooltip="Edit"
                 [matTooltipPosition]="'above'"
-                class="mr-2" (click)="editUserStory(userStory.id)">
+                class="mr-2" (click)="editUserStory(userStory)">
                   <mat-icon aria-hidden="false" aria-label="Delete button">edit</mat-icon>
                 </button>
 
                 <!-- Archive -->
-                <button mat-icon-button 
+                <button mat-icon-button
                 matTooltip="Archive"
                 [matTooltipPosition]="'above'"
                 class="mr-2" (click)="archiveUserStory(userStory.id)">

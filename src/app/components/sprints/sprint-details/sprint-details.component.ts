@@ -8,6 +8,8 @@ import { UserStoryService } from "../../../services/user-story.service";
 import { map, filter } from 'rxjs/operators';
 import { Sprint } from 'src/app/interfaces/sprint';
 import { BurndownChartComponent } from '../../burndown-chart/burndown-chart.component';
+import { UserService } from 'src/app/services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sprint-details',
@@ -23,6 +25,8 @@ export class SprintDetailsComponent implements OnInit {
   sprintId: string;
   projectId: string;
 
+  sub: Subscription;
+
   item: any;
 
   statuses = [
@@ -37,6 +41,7 @@ export class SprintDetailsComponent implements OnInit {
   done = [];
 
   constructor(private route: ActivatedRoute, private sprintsService: SprintsService,
+              private userService: UserService,
               public dialog: MatDialog, private userStoryService: UserStoryService) { }
 
   ngOnInit() {
@@ -52,6 +57,13 @@ export class SprintDetailsComponent implements OnInit {
       this.review = stories.filter(story => story.status == 'Review');
       this.done = stories.filter(story => story.status == 'Done');
     })
+  }
+
+  ngOnDestroy() {
+    // Check if something is subscribed to to begin with
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -91,7 +103,18 @@ export class SprintDetailsComponent implements OnInit {
 
   getUserStorys() {
     // Get all user stories that belong to this sprint
-    this.userStorys = this.userStoryService.getBySprint(this.sprintId);
+    this.userStorys = this.userStoryService.getBySprint(this.sprintId)
+    .pipe(map(x => {
+      x.map(i => {
+        if (i['assignee']) {
+          this.sub = this.userService.getUser(i['assignee']).subscribe(res => {
+            i['displayName'] = res.displayName;
+          });
+        }
+        return i;
+      });
+      return x;
+    }));    
   }
 
   openCreate() {

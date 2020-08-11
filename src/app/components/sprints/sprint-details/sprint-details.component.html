@@ -13,6 +13,9 @@
         <button class="float-right mr-2" mat-flat-button color="primary" (click)="openBurndown(sprint)">
           Burndown Chart
         </button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/', projectId]">
+          View User Stories
+        </button>
       </div>
     </div>
 
@@ -45,7 +48,9 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
-                      <span class="float-left story-points" *ngIf="item.assignee">Assigned to {{ item.assignee }}</span>
+                      <span class="float-left story-points" *ngIf="item.assignee">
+                        {{ item['displayName'] }}
+                      </span>
                     </div>
                     <div class="col-6">
                       <span class="float-right story-points">SP: {{ item.storyPoints }}</span>
@@ -75,8 +80,9 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
-                      <span class="float-left story-points" *ngIf="item.assignee">Assigned to {{ item.assignee }}</span>
-                    </div>
+                      <span class="float-left story-points" *ngIf="item.assignee">
+                        {{ item['displayName'] }}
+                      </span>                    </div>
                     <div class="col-6">
                       <span class="float-right story-points">SP: {{ item.storyPoints }}</span>
                     </div>
@@ -104,8 +110,9 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
-                      <span class="float-left story-points" *ngIf="item.assignee">Assigned to {{ item.assignee }}</span>
-                    </div>
+                      <span class="float-left story-points" *ngIf="item.assignee">
+                        {{ item['displayName'] }}
+                      </span>                    </div>
                     <div class="col-6">
                       <span class="float-right story-points">SP: {{ item.storyPoints }}</span>
                     </div>
@@ -133,8 +140,9 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
-                      <span class="float-left story-points" *ngIf="item.assignee">Assigned to {{ item.assignee }}</span>
-                    </div>
+                      <span class="float-left story-points" *ngIf="item.assignee">
+                        {{ item['displayName'] }}
+                      </span>                    </div>
                     <div class="col-6">
                       <span class="float-right story-points">SP: {{ item.storyPoints }}</span>
                     </div>

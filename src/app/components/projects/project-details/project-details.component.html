@@ -9,6 +9,9 @@
         <button class="float-right" mat-flat-button color="primary" (click)="openCreate()">
           New Sprint
         </button>
+        <button class="float-right mr-2" mat-stroked-button color="basic" [routerLink]="['/user-stories/', projectId]">
+          View User Stories
+        </button>
       </div>
     </div>
 
@@ -47,7 +50,7 @@
           <hr>
 
 
-          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/sprints',sprint.payload.doc.data().projectId, sprint.payload.doc.id]">View</button>
+          <button mat-stroked-button color="basic" class="mr-2" [routerLink]="['/sprints',sprint.payload.doc.data().projectId, sprint.payload.doc.id]">View Board</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="editSprint(sprint.payload.doc.data(), sprint.payload.doc.id)">Edit</button>
           <button mat-stroked-button color="basic" class="mr-2" (click)="deleteSprint(sprint.payload.doc.id)">
             <mat-icon aria-hidden="false" aria-label="Delete button">delete_outline</mat-icon>

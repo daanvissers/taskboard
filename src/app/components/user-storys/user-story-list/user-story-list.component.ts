@@ -66,12 +66,16 @@ export class UserStoryListComponent implements OnInit {
     this.userStorys = this.userStorysService.getByProject(projectId);
   }
 
-  editUserStory(id: string) {
+  editUserStory(userStory: UserStory) {
     if (this.isAuthorized()) {
       this.dialog.open(UserStoryEditComponent, {
         width: '450px',
-        height: '400px',
-        data: { id: id },
+        height: '500px',
+        data: { 
+          userStory: userStory,
+          id: userStory['id'],
+          project: this.project
+        },
       });
     } else {
       alert(`You don't belong in this project!`);

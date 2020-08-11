@@ -27,6 +27,20 @@ export class UserService {
   }
 
   /**
+   * Returns a collection of Users based on their uid's
+   * in a provided array. 
+   * Example array: ['sdji28fn1ds', '182ns69v23G']
+   * 
+   * @param array - An array containing uid's strings
+   * @returns - A collection of Users
+   */
+  getByArray(array: string[]) {
+    return this.afStore.collection('users', ref => ref
+                        .where('uid', 'in', array))
+                        .snapshotChanges();
+  }
+
+  /**
    * Return the User belonging to the given displayName.
    * Limit is set to 1, in case there are users with same name.
    * 
