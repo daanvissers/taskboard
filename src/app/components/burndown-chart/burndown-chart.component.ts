@@ -70,39 +70,56 @@ export class BurndownChartComponent implements OnInit {
       stories.forEach(story => {
         totalStoryPoints += story.storyPoints;
       });
-      console.log("Total amount of SP for this sprint: " + totalStoryPoints);
       this.totalSP = totalStoryPoints;
 
       /* Calculate amount of days in Sprint */
-      console.log("Sprint length in days: " + amountDays);
       this.amountDays = amountDays;
 
       /* Calculate ideal progress */
       const idealProgress = Math.ceil(totalStoryPoints / amountDays);
-      console.log("To finish in time, you should finish per day: " +
-      idealProgress);
       this.idealProgress = idealProgress;
+
+      /* Calculate how many SP is finished on every day */
+      let doneArray = [];
+      for(let i = 0; i < amountDays; i++) {
+        doneArray[i] = totalStoryPoints;
+      }
+      console.log('doneArray before loop: ' + doneArray);
+
+      for(let i = 0; i < amountDays; i++) {
+
+        console.log("Checking for day " + this.sprintDays[i].calendar());
+        // Check each story if it was completed on that day
+        stories.forEach(story => {
+          const doneAt = moment(story.doneAt);
+          if(doneAt.calendar() === (this.sprintDays[i].calendar())) {
+            console.log(story.title + ' was finished on ' + this.sprintDays[i].calendar());
+            // Substract the SP from the user story
+            console.log(doneArray[i]);
+            doneArray[i] -= story.storyPoints;
+            console.log(doneArray[i]);
+          }
+            doneArray[i+1] = doneArray[i];
+        });
+      }
+      console.log(doneArray);
       
       /* Start adding data to Google Chart */
       let leftoverSP = totalStoryPoints;
       for (let i = 0; i < this.sprintDays.length; i++) {
-
         if(leftoverSP > 0) {
           leftoverSP -= idealProgress;
         }
-
         this.chartData.push([
           // Day
           this.sprintDays[i].format("MMM Do"), 
           // Done
-          0,
+          doneArray[i],
           // Ideal
           leftoverSP,
         ]);
       }
-      
     });
-    
   }
 
   ngOnDestroy(): void {
