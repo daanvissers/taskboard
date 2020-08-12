@@ -37,6 +37,13 @@ export class BurndownChartComponent implements OnInit {
   sprintId: string;
   sprintDays: Moment[];
 
+  userStories: any;
+  sub: Subscription;
+
+  totalSP: any;
+  amountDays: any;
+  idealProgress: any;
+
   constructor(public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public dialogData: any,
               private burndownChart: BurndownChartService) {
@@ -54,13 +61,53 @@ export class BurndownChartComponent implements OnInit {
   ngOnInit(): void {
 
     this.chartData = [];
-    for (let i = 0; i < this.sprintDays.length; i++) {
-      this.chartData.push( [this.sprintDays[i].format("MMM Do"), 0, 0] );
-    }
+
+    const amountDays = this.sprintDays.length;
+    this.sub = this.burndownChart.getUserStoriesBySprint(this.sprintId).subscribe(stories => {
+      
+      /* Calculate amount of total SP */
+      let totalStoryPoints = 0;
+      stories.forEach(story => {
+        totalStoryPoints += story.storyPoints;
+      });
+      console.log("Total amount of SP for this sprint: " + totalStoryPoints);
+      this.totalSP = totalStoryPoints;
+
+      /* Calculate amount of days in Sprint */
+      console.log("Sprint length in days: " + amountDays);
+      this.amountDays = amountDays;
+
+      /* Calculate ideal progress */
+      const idealProgress = Math.ceil(totalStoryPoints / amountDays);
+      console.log("To finish in time, you should finish per day: " +
+      idealProgress);
+      this.idealProgress = idealProgress;
+      
+      /* Start adding data to Google Chart */
+      let leftoverSP = totalStoryPoints;
+      for (let i = 0; i < this.sprintDays.length; i++) {
+
+        if(leftoverSP > 0) {
+          leftoverSP -= idealProgress;
+        }
+
+        this.chartData.push([
+          // Day
+          this.sprintDays[i].format("MMM Do"), 
+          // Done
+          0,
+          // Ideal
+          leftoverSP,
+        ]);
+      }
+      
+    });
     
   }
 
   ngOnDestroy(): void {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
   }
-
 }

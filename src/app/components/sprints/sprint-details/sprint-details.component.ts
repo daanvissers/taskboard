@@ -10,6 +10,7 @@ import { Sprint } from 'src/app/interfaces/sprint';
 import { BurndownChartComponent } from '../../burndown-chart/burndown-chart.component';
 import { UserService } from 'src/app/services/user.service';
 import { Subscription } from 'rxjs';
+import { UserStory } from 'src/app/interfaces/user-story';
 
 @Component({
   selector: 'app-sprint-details',
@@ -130,11 +131,12 @@ export class SprintDetailsComponent implements OnInit {
 
   openBurndown(sprint: Sprint) {
     this.dialog.open(BurndownChartComponent, {
-      height: '500px',
+      height: '600px',
       width: '800px',
       data: {
         sprint: sprint,
-        sprintId: this.sprintId
+        sprintId: this.sprintId,
+        userStorys: this.userStorys
       }
     });
   }

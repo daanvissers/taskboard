@@ -14,7 +14,7 @@ export class BurndownChartService {
 
   constructor(private afStore: AngularFirestore) { }
 
-  getBySprint(sprintId: string): Observable<UserStory[]> {
+  getUserStoriesBySprint(sprintId: string): Observable<UserStory[]> {
     return this.afStore.collection<UserStory>('user-storys', ref => ref
                         .where('sprintId', '==', sprintId))
                         .valueChanges({ idField: 'id' });
@@ -27,7 +27,14 @@ export class BurndownChartService {
                         .valueChanges({idField: 'id'});
   }
 
-  getSprintRange(startDate: Moment, endDate: Moment) {
+  /**
+   * Returns an array of Moment date objects for 
+   * every day during the sprint.
+   * 
+   * @param startDate The starting date of the Sprint
+   * @param endDate The ending date of the Sprint
+   */
+  getSprintRange(startDate: Moment, endDate: Moment): Moment[] {
     let dates = [];
 
     let currDate = startDate.startOf('day');

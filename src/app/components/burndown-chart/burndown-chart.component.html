@@ -1,5 +1,12 @@
 <h2>Burndown Chart</h2>
 
+<p>
+    The current sprint has <b>{{ totalSP }} SP</b> in total 
+    and is <b>{{ amountDays }}</b> days long.<br>
+    To finish in time, <b>{{ idealProgress }} SP</b> need  
+    to be finished on a day.
+</p>
+
 <google-chart [type]="chartType" [data]="chartData" [columns]="chartColumns"
 class="burndown-chart">
 
