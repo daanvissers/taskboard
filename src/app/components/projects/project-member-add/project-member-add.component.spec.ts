@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { firebaseConfig } from '../../../../environments/environment';
+import { RouterModule } from '@angular/router';
 
 describe('ProjectMemberAddComponent', () => {
   let component: ProjectMemberAddComponent;
@@ -16,7 +17,8 @@ describe('ProjectMemberAddComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ProjectMemberAddComponent ],
-      imports: [  MatSnackBarModule,
+      imports: [  RouterModule.forRoot([]),
+                  MatSnackBarModule,
                   MatDialogModule,
                   AngularFireModule.initializeApp(firebaseConfig),
                   AngularFireAuthModule,
