@@ -53,6 +53,11 @@ export class UserStoryAssignComponent implements OnInit {
     this.sub.unsubscribe();
   }
 
+  unassign() {
+    this.userStoryService.updateField(this.userStory['id'], {sprintId: null});
+    this.dialog.closeAll();
+  }
+
   save() {
     if(!this.selected)
       alert('Please make a choice!');
