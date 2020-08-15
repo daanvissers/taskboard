@@ -22,7 +22,7 @@
             <mat-panel-title class="fixed-width">
               {{ project.name }}
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description class="status">
               <!-- Status defaults to Not Started when null -->
               <span class="mr-5">Status: {{ project.status || 'Not Started' }}</span>
             </mat-panel-description>
@@ -43,7 +43,7 @@
               <div class="row mt-2">
                 <div class="col-12">
                   <span class="font-weight-bold">Description: </span>
-                  <p>{{ selectedProject.description }}</p>
+                  <p class="description">{{ selectedProject.description }}</p>
                 </div>
               </div>
 
@@ -54,7 +54,7 @@
                     <mat-chip-list>
                       <!-- Chip for every member -->
                       <mat-chip *ngFor="let member of selectedProject.members">
-                        <span *ngIf="member.user | async as user" (click)="editMember(member['uid'], member['role'])">
+                        <span *ngIf="member.user | async as user" (click)="editMember(member['uid'], member['role'])" class="member">
                           <span>
                             {{ user['displayName'] }}:
                           </span>
