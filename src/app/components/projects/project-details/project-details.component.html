@@ -20,7 +20,7 @@
         <!-- *ngFor loop -->
         <mat-expansion-panel *ngFor="let sprint of sprints">
           <mat-expansion-panel-header>
-            <mat-panel-title>
+            <mat-panel-title class="fixed-width">
               <!-- Sprint is Active -->
               <span *ngIf="sprint.payload.doc.data().isActive">
                 <mat-icon aria-hidden="false" aria-label="Sprint is active">check_circle</mat-icon>

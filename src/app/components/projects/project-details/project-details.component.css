@@ -10,3 +10,7 @@
 .formfield {
     width: 70%;
 }
+
+.fixed-width {
+    width: 200px;
+}

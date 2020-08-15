@@ -19,7 +19,7 @@
         <!-- *ngFor loop -->
         <mat-expansion-panel *ngFor="let project of projects | async" (opened)="openProject(project)">
           <mat-expansion-panel-header *ngIf="!project.isArchived">
-            <mat-panel-title>
+            <mat-panel-title class="fixed-width">
               {{ project.name }}
             </mat-panel-title>
             <mat-panel-description>
