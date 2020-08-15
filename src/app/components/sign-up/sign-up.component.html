@@ -7,21 +7,28 @@
   <mat-grid-tile>
     <mat-form-field class="full-width">
       <mat-label>E-mail Address</mat-label>
-      <input matInput [(ngModel)]="email">
+      <input required matInput [(ngModel)]="email">
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile cols="1" rowHeight="4em">
+    <mat-form-field class="full-width">
+      <mat-label>Display Name</mat-label>
+      <input required matInput [(ngModel)]="displayName">
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-form-field class="full-width">
       <mat-label>Password</mat-label>
-      <input type="password" matInput [(ngModel)]="password">
+      <input required type="password" matInput [(ngModel)]="password">
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-form-field class="full-width">
       <mat-label>Repeat Password</mat-label>
-      <input type="password" matInput [(ngModel)]="repeat">
+      <input required type="password" matInput [(ngModel)]="repeat">
     </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>

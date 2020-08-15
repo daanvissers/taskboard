@@ -18,6 +18,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" class="sidenav">
     <mat-list class="margin-top">
+      <a mat-list-item [routerLink]="'home'" (click)="closeNav()"> Home </a>
       <a mat-list-item [routerLink]="'projects'" (click)="closeNav()"> Projects </a>
       <!-- <mat-list-item> Pepper </mat-list-item> -->
       <!-- <mat-list-item> Salt </mat-list-item> -->

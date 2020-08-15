@@ -34,7 +34,11 @@ export class ProjectsService {
   }
 
   getAll() {
-    const userId = this.authenticationService.localUser.uid;
+    let userId = this.authenticationService.localUser.uid;
+
+    if (userId == null) {
+      userId = this.authenticationService.userData.uid;
+    }
 
     // Create role variables for the 
     // limited Firestore array-contains-any query

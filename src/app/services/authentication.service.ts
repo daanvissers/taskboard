@@ -14,7 +14,8 @@ export class AuthenticationService {
   userData: User;
   localUser: User;
 
-  constructor(public afStore: AngularFirestore, public afAuth: AngularFireAuth,
+  constructor(public afStore: AngularFirestore, 
+              public afAuth: AngularFireAuth,
               public router: Router) 
   {
 
@@ -41,29 +42,43 @@ export class AuthenticationService {
   signIn(email, password) {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then(result => {
-        this.setUserData(result.user);
         this.router.navigate(['/projects']);
       }).catch(error => {
         alert(error);
       });
   }
 
-  signUp(email, password) {
-    return this.afAuth.createUserWithEmailAndPassword(email, password)
+  signUp(email, password, displayName) {
+    this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(result => {
-        this.setUserData(result.user);
-        this.router.navigate(['/projects']);
-      }).catch(error => {
+
+        // Set displayName
+        result.user.updateProfile({
+          displayName: displayName
+        });
+
+        this.storeInDatabase(result.user, displayName);
+        
+      })
+      .catch(error => {
         alert(error);
-      });
+    });
+
+    this.router.navigate(['/projects']);
   }
 
-  setUserData(user) {
+  /**
+   * Apart from authenticating with the app, the user's details
+   * must also be stored in Firebase Firestore as a User object.
+   * @param user The User to be stored in the Database
+   * @param displayName The display name for the User
+   */
+  storeInDatabase(user, displayName) {
     const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.uid}`);
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
+      displayName: displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified
     };
@@ -79,6 +94,7 @@ export class AuthenticationService {
   signOut() {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
+      this.userData = null;
       this.router.navigate(['/']);
     });
   }

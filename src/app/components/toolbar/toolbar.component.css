@@ -1,3 +1,6 @@
+/* TODO: No accessibility, this is bad practice! */
+:focus { outline: none; }
+
 .fill-space {
   flex: 1 1 auto;
 }

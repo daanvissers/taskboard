@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,8 +13,11 @@ export class SignUpComponent implements OnInit {
   @Input() email: string;
   @Input() password: string;
   @Input() repeat: string;
+  @Input() displayName: string;
 
-  constructor(public authService: AuthenticationService, private router: Router) { }
+  constructor(public authService: AuthenticationService, 
+              private router: Router,
+              public dialog: MatDialog,) { }
 
   ngOnInit(): void {
   }
@@ -22,7 +26,8 @@ export class SignUpComponent implements OnInit {
     if (password !== repeat) {
       alert('Passwords invalid: Please make sure the passwords match!');
     } else {
-      this.authService.signUp(email, password);
+      this.authService.signUp(email, password, this.displayName);
+      this.dialog.closeAll();
     }
   }
 }
