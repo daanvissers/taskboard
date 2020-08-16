@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card class="mat-elevation-z3 p-4">
     <h3>
-      Welcome to Taskboard<span *ngIf="authService.userData">, {{ authService.userData.displayName }}</span>!
+      Welcome to Taskboard<span id='landingDisplayName' *ngIf="authService.userData">, {{ authService.localUser.displayName }}</span>!
     </h3>
     <div style="height: 70vh;"></div>
   </mat-card>

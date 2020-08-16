@@ -1,4 +1,4 @@
-<h2>Sign Up</h2>
+<h2 id="signUpTitle">Sign Up</h2>
 
 <mat-grid-list cols="1" rowHeight="1em">
 </mat-grid-list>
@@ -7,28 +7,28 @@
   <mat-grid-tile>
     <mat-form-field class="full-width">
       <mat-label>E-mail Address</mat-label>
-      <input required matInput [(ngModel)]="email">
+      <input required matInput [(ngModel)]="email" id='email'>
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile cols="1" rowHeight="4em">
     <mat-form-field class="full-width">
       <mat-label>Display Name</mat-label>
-      <input required matInput [(ngModel)]="displayName">
+      <input required matInput [(ngModel)]="displayName" id='displayName'>
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-form-field class="full-width">
       <mat-label>Password</mat-label>
-      <input required type="password" matInput [(ngModel)]="password">
+      <input required type="password" matInput [(ngModel)]="password" id='password'>
     </mat-form-field>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <mat-form-field class="full-width">
       <mat-label>Repeat Password</mat-label>
-      <input required type="password" matInput [(ngModel)]="repeat">
+      <input required type="password" matInput [(ngModel)]="repeat" id='repeat'>
     </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>

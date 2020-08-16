@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="position-fixed z-index-999 mat-elevation-z8">
 
   <!-- Hamburger Icon -->
-  <button mat-icon-button>
+  <button mat-icon-button id='sidebar'>
     <mat-icon (click)="toggleNav()">menu</mat-icon>
   </button>
 
@@ -20,8 +20,8 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" class="sidenav">
     <mat-list class="margin-top">
-      <a mat-list-item [routerLink]="'home'" (click)="closeNav()"> Home </a>
-      <a mat-list-item [routerLink]="'projects'" (click)="closeNav()"> Projects </a>
+      <a mat-list-item id='navHome' [routerLink]="'home'" (click)="closeNav()"> Home </a>
+      <a mat-list-item id='navProjects' [routerLink]="'projects'" (click)="closeNav()"> Projects </a>
       <!-- <mat-list-item> Pepper </mat-list-item> -->
       <!-- <mat-list-item> Salt </mat-list-item> -->
       <!-- <mat-list-item> Paprika </mat-list-item> -->
