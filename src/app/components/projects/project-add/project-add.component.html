@@ -10,7 +10,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Project Title</mat-label>
-        <input matInput [(ngModel)]="title">
+        <input required matInput [(ngModel)]="title">
       </mat-form-field>
 
     </div>
@@ -20,6 +20,7 @@
       <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea matInput
+                  required
                   cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="3"

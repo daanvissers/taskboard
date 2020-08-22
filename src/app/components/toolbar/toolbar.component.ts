@@ -15,8 +15,12 @@ export class ToolbarComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   open: boolean;
 
-  constructor(public dialog: MatDialog, public authService: AuthenticationService,
-              public router: Router) { }
+  constructor(public dialog: MatDialog, 
+              public authService: AuthenticationService,
+              public router: Router) 
+  {
+    this.open = false;
+  }
 
   ngOnInit(): void {
   }
@@ -48,12 +52,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   toggleNav() {
-    if (this.open === true) {
+    if(this.sidenav.opened) {
       this.sidenav.close();
-      this.open = false;
     } else {
       this.sidenav.open();
-      this.open = true;
     }
   }
 }

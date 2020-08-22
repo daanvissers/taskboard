@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user';
-import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
@@ -41,8 +40,17 @@ export class AuthenticationService {
 
   signIn(email, password) {
     return this.afAuth.signInWithEmailAndPassword(email, password)
-      .then(result => {
-        this.router.navigate(['/projects']);
+      .then(result => {        
+        const user: User = {
+          uid: result.user.uid,
+          displayName: result.user.displayName,
+          email: result.user.email,
+          emailVerified: result.user.emailVerified,
+          photoURL: result.user.photoURL
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        this.localUser = user;
+        this.router.navigate(['']);
       }).catch(error => {
         alert(error);
       });
@@ -58,13 +66,11 @@ export class AuthenticationService {
         });
 
         this.storeInDatabase(result.user, displayName);
-        
+        this.router.navigate(['']);        
       })
       .catch(error => {
         alert(error);
     });
-
-    this.router.navigate(['/projects']);
   }
 
   /**
@@ -92,10 +98,12 @@ export class AuthenticationService {
       in Local Storage and signing out of AngularFireAuth
       */
   signOut() {
+    localStorage.removeItem('user');
+    this.localUser = null;
+    this.userData = null;
+
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.userData = null;
-      this.router.navigate(['/']);
+      this.router.navigate(['']);
     });
   }
 

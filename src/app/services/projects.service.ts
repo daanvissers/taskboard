@@ -18,19 +18,26 @@ export class ProjectsService {
 
   create(project: Project) {
 
-    // Add the owner as a project member
-    project.members = [{role: 'Owner', uid: project.owner}];
+    if(!project.description || !project.name) {
+      this.snackbar.open('Please fill in all fields!', 'Close', {
+        duration: 5000,
+      });
+    }
+    else {
+      // Add the owner as a project member
+      project.members = [{role: 'Owner', uid: project.owner}];
 
-    return new Promise<any>((resolve, reject) => {
-      this.afStore.collection('projects')
-        .add(project)
-        .then(res => {
-          // Show 'snackbar' message that it was a success
-          this.snackbar.open('Successfully created project!', 'Close', {
-            duration: 5000,
-          });
-        }, err => reject(err));
-    });
+      return new Promise<any>((resolve, reject) => {
+        this.afStore.collection('projects')
+          .add(project)
+          .then(res => {
+            // Show 'snackbar' message that it was a success
+            this.snackbar.open('Successfully created project!', 'Close', {
+              duration: 5000,
+            });
+          }, err => reject(err));
+      });
+    }
   }
 
   getAll() {
