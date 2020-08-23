@@ -63,16 +63,17 @@ export class ProjectListComponent implements OnInit {
   }
 
   editMember(memberId: string, oldrole: string) {
-    console.log(memberId);
-    this.dialog.open(ProjectMemberEditComponent, {
-      width: '450px',
-      height: '250px',
-      data: { 
-        id: memberId,
-        projectId: this.selectedProject.id,
-        oldrole: oldrole
-      }
-    });
+    if(this.selectedProject.canEdit) {
+      this.dialog.open(ProjectMemberEditComponent, {
+        width: '450px',
+        height: '250px',
+        data: { 
+          id: memberId,
+          projectId: this.selectedProject.id,
+          oldrole: oldrole
+        }
+      });
+    }
   }
 
   openProject(project: Project) {
@@ -92,11 +93,21 @@ export class ProjectListComponent implements OnInit {
                             .map(x => x.uid)
                             .includes(this.auth.userData.uid));
 
+    // Viewers can't edit Projects
+    const user = this.selectedProject.members.find(this.findViewer);
+    if (user != null && user.uid === this.auth.userData.uid) {
+      canEdit = false;
+    }
+
     // Overwrite canEdit if the logged in user is the owner
     if (this.auth.userData.uid === this.selectedProject.owner)
-      canEdit = true;
+      canEdit = true;   
 
     this.selectedProject.canEdit = canEdit;
+  }
+
+  findViewer(user) {
+    return user.role === 'Viewer';
   }
 
 }
