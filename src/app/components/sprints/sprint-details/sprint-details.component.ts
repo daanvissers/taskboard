@@ -11,6 +11,7 @@ import { BurndownChartComponent } from '../../burndown-chart/burndown-chart.comp
 import { UserService } from 'src/app/services/user.service';
 import { Subscription } from 'rxjs';
 import { UserStory } from 'src/app/interfaces/user-story';
+import { UserStoryDoneEditComponent } from '../../user-storys/user-story-done-edit/user-story-done-edit.component';
 
 @Component({
   selector: 'app-sprint-details',
@@ -137,6 +138,17 @@ export class SprintDetailsComponent implements OnInit {
         sprint: sprint,
         sprintId: this.sprintId,
         userStorys: this.userStorys
+      }
+    });
+  }
+
+  editDate(story: UserStory, sprint: Sprint) {
+    this.dialog.open(UserStoryDoneEditComponent, {
+      height: '210px',
+      width: '300px',
+      data: { 
+        story: story, 
+        sprint: sprint
       }
     });
   }
